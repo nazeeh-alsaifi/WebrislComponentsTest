@@ -2,36 +2,30 @@
   <table class="table table-hover">
     <thead>
       <tr>
-        <th scope="col">#</th>
-        <th scope="col">First</th>
-        <th scope="col">Last</th>
-        <th scope="col">Handle</th>
+        <th v-for="header in allHeaders" :key="header.id" scope="col">
+          {{ header.value }}
+        </th>
       </tr>
     </thead>
     <tbody>
-      <tr>
-        <th scope="row">1</th>
-        <td>Mark</td>
-        <td>Otto</td>
-        <td>@mdo</td>
-      </tr>
-      <tr>
-        <th scope="row">2</th>
-        <td>Jacob</td>
-        <td>Thornton</td>
-        <td>@fat</td>
-      </tr>
-      <tr>
-        <th scope="row">3</th>
-        <td colspan="2">Larry the Bird</td>
-        <td>@twitter</td>
+      <tr v-for="row in allRows" :key="row.id">
+        <td>{{ row.id }}</td>
+        <td>{{ row.col1 }}</td>
+        <td>{{ row.col2 }}</td>
+        <td>{{ row.col3 }}</td>
       </tr>
     </tbody>
   </table>
 </template>
 
 <script>
-export default {};
+import { mapGetters } from "vuex";
+
+export default {
+  name: "Datatable1v",
+
+  computed: mapGetters(["allHeaders", "allRows"]),
+};
 </script>
 
 <style>
