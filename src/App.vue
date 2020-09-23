@@ -2,7 +2,7 @@
   <div id="app">
     <img alt="Vue logo" src="./assets/logo.png" />
     <HelloWorld msg="Welcome to Your Vue.js App" />
-    <addRow />
+    <TableControl />
     <Datatable1v />
   </div>
 </template>
@@ -10,13 +10,13 @@
 <script>
 import HelloWorld from "./components/HelloWorld.vue";
 import Datatable1v from "./components/Datatable1v";
-import addRow from "./components/addRow";
+import TableControl from "./components/TableControl";
 export default {
   name: "App",
   components: {
     HelloWorld,
     Datatable1v,
-    addRow,
+    TableControl,
   },
 };
 </script>

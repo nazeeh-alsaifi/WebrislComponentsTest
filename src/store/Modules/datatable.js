@@ -64,7 +64,12 @@ const actions = {
     //length of headers
     const hLen = state.headers.length;
     // last obj in rows
-    const latestRow = state.rows[state.rows.length - 1];
+    var latestRow;
+    try {
+      latestRow = state.rows[state.rows.length - 1];
+    } catch (error) {
+      console.log(error);
+    }
     //----constructing new row
     const row = {};
     row["id"] = latestRow.id + 1;
@@ -73,10 +78,24 @@ const actions = {
     console.log(row);
     commit("newRow", row);
   },
+
+  deleteRow({ commit }) {
+    var latestRow;
+    try {
+      latestRow = state.rows[state.rows.length - 1];
+    } catch (error) {
+      console.log(error);
+    }
+    console.log(latestRow.id);
+    commit("deleteRow", latestRow.id);
+  },
 };
 
 const mutations = {
   newRow: (state, row) => state.rows.push(row),
+  deleteRow: (state, id) => {
+    state.rows = state.rows.filter((row) => row.id !== id);
+  },
 
   setTodos: (state, todos) => (state.todos = todos),
   newTodo: (state, todo) => state.todos.unshift(todo),
