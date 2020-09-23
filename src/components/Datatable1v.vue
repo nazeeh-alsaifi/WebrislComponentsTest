@@ -9,12 +9,9 @@
     </thead>
     <tbody>
       <tr v-for="row in allRows" :key="row.id">
-        <td>{{ row.id }}</td>
-        <td>{{ row.col1 }}</td>
-        <td>{{ row.col2 }}</td>
-        <td>{{ row.col3 }}</td>
-        <td>{{ row.col4 }}</td>
-        <td>{{ row.col5 }}</td>
+        <td v-for="(key, index) in Object.keys(row)" :key="index">
+          {{ row[key] }}
+        </td>
       </tr>
     </tbody>
   </table>
