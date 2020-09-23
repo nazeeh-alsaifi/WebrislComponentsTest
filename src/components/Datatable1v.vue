@@ -13,6 +13,8 @@
         <td>{{ row.col1 }}</td>
         <td>{{ row.col2 }}</td>
         <td>{{ row.col3 }}</td>
+        <td>{{ row.col4 }}</td>
+        <td>{{ row.col5 }}</td>
       </tr>
     </tbody>
   </table>

@@ -5,8 +5,11 @@
         Add Row
       </button>
 
-      <button type="button" class="btn btn-primary" @click="deleteRow">
+      <button type="button" class="btn btn-secondary mr-2" @click="deleteRow">
         Delete Row
+      </button>
+      <button type="button" class="btn btn-danger" @click="addHeader">
+        Add Column
       </button>
     </div>
   </div>
@@ -16,7 +19,7 @@
 import { mapActions } from "vuex";
 export default {
   name: "TableControl",
-  methods: { ...mapActions(["addRow", "deleteRow"]) },
+  methods: { ...mapActions(["addRow", "deleteRow", "addHeader"]) },
 };
 </script>
 

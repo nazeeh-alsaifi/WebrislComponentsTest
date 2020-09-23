@@ -8,9 +8,9 @@ const state = {
     { id: 3, value: "header3" },
   ],
   rows: [
+    { id: 0, col1: "col1", col2: "col2", col3: "col3" },
     { id: 1, col1: "col1", col2: "col2", col3: "col3" },
     { id: 2, col1: "col1", col2: "col2", col3: "col3" },
-    { id: 3, col1: "col1", col2: "col2", col3: "col3" },
   ],
 };
 
@@ -64,15 +64,15 @@ const actions = {
     //length of headers
     const hLen = state.headers.length;
     // last obj in rows
-    var latestRow;
+    var lastRow;
     try {
-      latestRow = state.rows[state.rows.length - 1];
+      lastRow = state.rows[state.rows.length - 1];
     } catch (error) {
       console.log(error);
     }
     //----constructing new row
     const row = {};
-    row["id"] = latestRow.id + 1;
+    row["id"] = lastRow.id + 1;
     for (var i = 1; i < hLen; i++) row["col" + i] = "col" + i;
 
     console.log(row);
@@ -80,14 +80,29 @@ const actions = {
   },
 
   deleteRow({ commit }) {
-    var latestRow;
+    var lastRow;
     try {
-      latestRow = state.rows[state.rows.length - 1];
+      lastRow = state.rows[state.rows.length - 1];
     } catch (error) {
       console.log(error);
     }
-    console.log(latestRow.id);
-    commit("deleteRow", latestRow.id);
+    console.log(lastRow.id);
+    commit("deleteRow", lastRow.id);
+  },
+
+  addHeader({ commit }) {
+    var lastHeader;
+    try {
+      lastHeader = state.headers[state.headers.length - 1];
+    } catch (error) {
+      console.log(error);
+    }
+
+    const newHeader = {};
+    newHeader["id"] = lastHeader.id + 1;
+    newHeader["value"] = "Header" + (lastHeader.id + 1);
+
+    commit("addHeader", newHeader);
   },
 };
 
@@ -95,6 +110,58 @@ const mutations = {
   newRow: (state, row) => state.rows.push(row),
   deleteRow: (state, id) => {
     state.rows = state.rows.filter((row) => row.id !== id);
+  },
+
+  addHeader: (state, header) => {
+    state.headers.push(header);
+    // number of rows
+    var length = state.rows.length;
+    if (length != 0) {
+      for (var i = 0; i < length; i++) {
+        var row = state.rows[i];
+        row["col" + header.id] = "col" + header.id;
+        console.log(row);
+        state.rows.splice(i, 1, row);
+      }
+    }
+
+    // state.rows.splice(0, 1, {
+    //   id: 1,
+    //   col1: "col1",
+    //   col2: "col2",
+    //   col3: "col3",
+    //   col4: "col4",
+    // });
+    // state.rows.splice(1, 1, {
+    //   id: 2,
+    //   col1: "col1",
+    //   col2: "col2",
+    //   col3: "col3",
+    //   col4: "col4",
+    // });
+    // state.rows.splice(2, 1, {
+    //   id: 3,
+    //   col1: "col1",
+    //   col2: "col2",
+    //   col3: "col3",
+    //   col4: "col4",
+    // });
+
+    // var length = state.rows.length;
+
+    // for (var i = 0; i < length; i++) {
+    //   const index = state.rows.findIndex((row) => row.id === i + 1);
+    //   if (index !== -1) {
+    //     const row = state.rows[i];
+    //     state.rows.splice(i, 1, row);
+    //   }
+    // }
+    // console.log(state.rows);
+    // state.rows= state.rows.forEach(row => row["col" + header.id] = "col" + header.id);
+    // state.rows.forEach((row) => {
+    //   row["col" + header.id] = "col" + header.id;
+    //   console.log(row);
+    // });
   },
 
   setTodos: (state, todos) => (state.todos = todos),
