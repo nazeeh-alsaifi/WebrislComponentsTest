@@ -11,6 +11,9 @@
       <button type="button" class="btn btn-danger" @click="addHeader">
         Add Column
       </button>
+      <button type="button" class="btn btn-danger" @click="deleteHeader">
+        Add Column
+      </button>
     </div>
   </div>
 </template>
@@ -19,7 +22,9 @@
 import { mapActions } from "vuex";
 export default {
   name: "TableControl",
-  methods: { ...mapActions(["addRow", "deleteRow", "addHeader"]) },
+  methods: {
+    ...mapActions(["addRow", "deleteRow", "addHeader", "deleteHeader"]),
+  },
 };
 </script>
 
