@@ -1,18 +1,18 @@
 <template>
   <div>
-    <div>
+    <div class="m-2">
       <button type="button" class="btn btn-primary mr-2" @click="addRow">
         Add Row
       </button>
 
-      <button type="button" class="btn btn-secondary mr-2" @click="deleteRow">
+      <button type="button" class="btn btn-success mr-2" @click="deleteRow">
         Delete Row
       </button>
-      <button type="button" class="btn btn-danger" @click="addHeader">
+      <button type="button" class="btn btn-danger mr-2" @click="addHeader">
         Add Column
       </button>
-      <button type="button" class="btn btn-danger" @click="deleteHeader">
-        Add Column
+      <button type="button" class="btn btn-warning" @click="deleteHeader">
+        Remove Column
       </button>
     </div>
   </div>
