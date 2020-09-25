@@ -19,9 +19,16 @@
       </tr>
     </thead>
     <tbody>
-      <tr v-for="row in allRows" :key="row.id">
+      <!-- 
+        <tr v-for="row in allRows" :key="row.id">
         <td v-for="(key, index) in Object.keys(row)" :key="index">
           {{ row[key] }}
+        </td>
+      </tr>
+       -->
+      <tr v-for="(row, index) in allRows2" :key="index">
+        <td v-for="rowObject in row" :key="rowObject.id">
+          {{ rowObject.value }}
         </td>
       </tr>
     </tbody>
@@ -34,7 +41,7 @@ import { mapGetters, mapActions } from "vuex";
 export default {
   name: "Datatable1v",
   methods: mapActions(["updateHeader"]),
-  computed: mapGetters(["allHeaders", "allRows"]),
+  computed: mapGetters(["allHeaders", "allRows", "allRows2"]),
 };
 </script>
 

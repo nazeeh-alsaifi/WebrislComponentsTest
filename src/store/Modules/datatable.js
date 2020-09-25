@@ -12,11 +12,32 @@ const state = {
     { id: 1, col1: "col1", col2: "col2", col3: "col3" },
     { id: 2, col1: "col1", col2: "col2", col3: "col3" },
   ],
+  rows2: {
+    num1: [
+      { id: 0, value: "1", edit: false },
+      { id: 1, value: "col1", edit: false },
+      { id: 2, value: "col2", edit: false },
+      { id: 3, value: "col3", edit: false },
+    ],
+    num2: [
+      { id: 0, value: "2", edit: false },
+      { id: 1, value: "col1", edit: false },
+      { id: 2, value: "col2", edit: false },
+      { id: 3, value: "col3", edit: false },
+    ],
+    num3: [
+      { id: 0, value: "3", edit: false },
+      { id: 1, value: "col1", edit: false },
+      { id: 2, value: "col2", edit: false },
+      { id: 3, value: "col3", edit: false },
+    ],
+  },
 };
 
 const getters = {
   allHeaders: (state) => state.headers,
   allRows: (state) => state.rows,
+  allRows2: (state) => state.rows2,
 };
 
 const actions = {
