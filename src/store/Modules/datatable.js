@@ -2,10 +2,10 @@
 
 const state = {
   headers: [
-    { id: 0, value: "#" },
-    { id: 1, value: "header1" },
-    { id: 2, value: "header2" },
-    { id: 3, value: "header3" },
+    { id: 0, value: "#", edit: false },
+    { id: 1, value: "header1", edit: false },
+    { id: 2, value: "header2", edit: false },
+    { id: 3, value: "header3", edit: false },
   ],
   rows: [
     { id: 0, col1: "col1", col2: "col2", col3: "col3" },
@@ -61,6 +61,7 @@ const actions = {
     const newHeader = {};
     newHeader["id"] = lastHeader.id + 1;
     newHeader["value"] = "Header" + (lastHeader.id + 1);
+    newHeader["edit"] = false;
 
     commit("addHeader", newHeader);
   },
@@ -70,6 +71,11 @@ const actions = {
     if (length !== 0) {
       commit("deleteHeader", state.headers[length - 1].id);
     }
+  },
+
+  updateHeader({ commit }, upHeader) {
+    // we can construct a new header or evaluation
+    commit("updateHeader", upHeader);
   },
 };
 
@@ -102,6 +108,15 @@ const mutations = {
         delete row["col" + id];
         state.rows.splice(i, 1, row);
       }
+    }
+  },
+
+  updateHeader: (state, upHeader) => {
+    const index = state.headers.findIndex(
+      (header) => header.id === upHeader.id
+    );
+    if (index !== -1) {
+      state.headers.splice(index, 1, upHeader);
     }
   },
 };

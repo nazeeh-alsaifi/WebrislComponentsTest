@@ -3,7 +3,18 @@
     <thead>
       <tr>
         <th v-for="header in allHeaders" :key="header.id" scope="col">
-          {{ header.value }}
+          <div v-show="header.edit == false" @dblclick="header.edit = true">
+            {{ header.value }}
+          </div>
+          <input
+            v-show="header.edit == true"
+            v-model="header.value"
+            v-on:blur="
+              header.edit = false;
+              updateHeader(header);
+            "
+            @keyup.enter="$event.target.blur()"
+          />
         </th>
       </tr>
     </thead>
@@ -18,11 +29,11 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+import { mapGetters, mapActions } from "vuex";
 
 export default {
   name: "Datatable1v",
-
+  methods: mapActions(["updateHeader"]),
   computed: mapGetters(["allHeaders", "allRows"]),
 };
 </script>
