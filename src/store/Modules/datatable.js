@@ -75,7 +75,6 @@ const actions = {
       }
       rowArray.push(rowObject);
     }
-    console.log(rowArray);
     commit("newRow2", rowArray);
   },
 
@@ -111,6 +110,16 @@ const actions = {
     newHeader["edit"] = false;
 
     commit("addHeader", newHeader);
+  },
+
+  addHeader2({ commit }) {
+    const newHeader = {};
+    newHeader["id"] = state.headers.length;
+    newHeader["value"] = "header" + state.headers.length;
+    newHeader["edit"] = false;
+
+    commit("addHeader2", newHeader);
+    // console.log(state.rows2["num0"]);
   },
 
   deleteHeader({ commit }) {
@@ -154,6 +163,20 @@ const mutations = {
       }
     }
   },
+
+  addHeader2: (state, header) => {
+    state.headers.push(header);
+    const newRow = {};
+    newRow["id"] = header.id;
+    newRow["value"] = "col" + header.id;
+    newRow["edit"] = false;
+
+    // number of rows
+    Object.keys(state.rows2).forEach((rowName) =>
+      state.rows2[rowName].push(newRow)
+    );
+  },
+
   deleteHeader: (state, id) => {
     state.headers = state.headers.filter((header) => header.id !== id);
 

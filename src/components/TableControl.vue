@@ -8,7 +8,7 @@
       <button type="button" class="btn btn-success mr-2" @click="deleteRow2">
         Delete Row
       </button>
-      <button type="button" class="btn btn-danger mr-2" @click="addHeader">
+      <button type="button" class="btn btn-danger mr-2" @click="addHeader2">
         Add Column
       </button>
       <button type="button" class="btn btn-warning" @click="deleteHeader">
@@ -29,6 +29,7 @@ export default {
       "deleteRow",
       "deleteRow2",
       "addHeader",
+      "addHeader2",
       "deleteHeader",
     ]),
   },
