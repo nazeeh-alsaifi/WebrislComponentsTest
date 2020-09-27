@@ -19,16 +19,23 @@
       </tr>
     </thead>
     <tbody>
-      <!-- 
-        <tr v-for="row in allRows" :key="row.id">
-        <td v-for="(key, index) in Object.keys(row)" :key="index">
-          {{ row[key] }}
-        </td>
-      </tr>
-       -->
-      <tr v-for="(row, index) in allRows2" :key="index">
+      <tr v-for="(row, propertyName, index) in allRows" :key="index">
         <td v-for="rowObject in row" :key="rowObject.id">
-          {{ rowObject.value }}
+          <div
+            v-show="rowObject.edit == false"
+            @dblclick="rowObject.edit = true"
+          >
+            {{ rowObject.value }}
+          </div>
+          <input
+            v-show="rowObject.edit == true"
+            v-model="rowObject.value"
+            v-on:blur="
+              rowObject.edit = false;
+              updateRow(rowObject, $event);
+            "
+            @keyup.enter="$event.target.blur()"
+          />
         </td>
       </tr>
     </tbody>
@@ -40,8 +47,8 @@ import { mapGetters, mapActions } from "vuex";
 
 export default {
   name: "Datatable1v",
-  methods: mapActions(["updateHeader"]),
-  computed: mapGetters(["allHeaders", "allRows", "allRows2"]),
+  methods: mapActions(["updateHeader", "updateRow"]),
+  computed: mapGetters(["allHeaders", "allRows"]),
 };
 </script>
 
