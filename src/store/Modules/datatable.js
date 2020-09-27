@@ -129,6 +129,13 @@ const actions = {
     }
   },
 
+  deleteHeader2({ commit }) {
+    var length = state.headers.length;
+    if (length !== 0) {
+      commit("deleteHeader2", state.headers[length - 1].id);
+    }
+  },
+
   updateHeader({ commit }, upHeader) {
     // we can construct a new header or evaluation
     commit("updateHeader", upHeader);
@@ -188,6 +195,11 @@ const mutations = {
         state.rows.splice(i, 1, row);
       }
     }
+  },
+  deleteHeader2: (state, id) => {
+    state.headers = state.headers.filter((header) => header.id !== id);
+
+    Object.keys(state.rows2).forEach((rowName) => state.rows2[rowName].pop());
   },
 
   updateHeader: (state, upHeader) => {

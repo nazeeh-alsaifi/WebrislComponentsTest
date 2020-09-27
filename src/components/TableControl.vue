@@ -11,7 +11,7 @@
       <button type="button" class="btn btn-danger mr-2" @click="addHeader2">
         Add Column
       </button>
-      <button type="button" class="btn btn-warning" @click="deleteHeader">
+      <button type="button" class="btn btn-warning" @click="deleteHeader2">
         Remove Column
       </button>
     </div>
@@ -31,6 +31,7 @@ export default {
       "addHeader",
       "addHeader2",
       "deleteHeader",
+      "deleteHeader2",
     ]),
   },
 };
