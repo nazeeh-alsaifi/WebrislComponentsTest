@@ -7,11 +7,14 @@ const state = {
     { id: 2, value: "header2", edit: false },
     { id: 3, value: "header3", edit: false },
   ],
-  // rows: [
-  //   { id: 0, col1: "col1", col2: "col2", col3: "col3" },
-  //   { id: 1, col1: "col1", col2: "col2", col3: "col3" },
-  //   { id: 2, col1: "col1", col2: "col2", col3: "col3" },
-  // ],
+  /* 
+  rows: [
+    { id: 0, col1: "col1", col2: "col2", col3: "col3" },
+    { id: 1, col1: "col1", col2: "col2", col3: "col3" },
+    { id: 2, col1: "col1", col2: "col2", col3: "col3" },
+  ],
+   */
+  /* 
   rows: {
     num0: [
       { id: 0, value: "1", edit: false },
@@ -31,7 +34,39 @@ const state = {
       { id: 2, value: "col2", edit: false },
       { id: 3, value: "col3", edit: false },
     ],
-  },
+  }, 
+  */
+  rows: [
+    // row1
+    {
+      id: 0,
+      rowObjects: [
+        //rowDataObj
+        { id: 0, value: "1", edit: false },
+        { id: 1, value: "col1", edit: false },
+        { id: 2, value: "col2", edit: false },
+        { id: 3, value: "col3", edit: false },
+      ],
+    },
+    {
+      id: 1,
+      rowObjects: [
+        { id: 0, value: "2", edit: false },
+        { id: 1, value: "col1", edit: false },
+        { id: 2, value: "col2", edit: false },
+        { id: 3, value: "col3", edit: false },
+      ],
+    },
+    {
+      id: 2,
+      rowObjects: [
+        { id: 0, value: "3", edit: false },
+        { id: 1, value: "col1", edit: false },
+        { id: 2, value: "col2", edit: false },
+        { id: 3, value: "col3", edit: false },
+      ],
+    },
+  ],
 };
 
 const getters = {
@@ -88,13 +123,9 @@ const actions = {
     commit("updateHeader", upHeader);
   },
 
-  updateRow(value1, value2) {
-    console.log("in actions");
-    console.log(value1);
-    console.log(value2.target.value);
-    console.log("=============");
-
-    // commit("updateRow", value1, value2);
+  updateRow({ commit }, rowDetails) {
+    // console.log("rowDetails", rowDetails);
+    commit("updateRow", rowDetails);
   },
 };
 
@@ -133,10 +164,12 @@ const mutations = {
     }
   },
 
-  updateRow: (state, value1, value2) => {
-    // const row = state.rows[parent];
-    console.log(value1);
-    console.log(value2);
+  updateRow: (state, rowDetails) => {
+    console.log("i am in mutation");
+    console.log(rowDetails);
+    const row = state.rows[rowDetails.id];
+    row.rowObjects.splice(rowDetails.obj.id, 1, rowDetails.obj);
+    console.log(row);
   },
 };
 

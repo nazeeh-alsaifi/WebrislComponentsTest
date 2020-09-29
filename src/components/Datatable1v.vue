@@ -19,7 +19,7 @@
       </tr>
     </thead>
     <tbody>
-      <tr v-for="(row, propertyName, index) in allRows" :key="index">
+      <!-- <tr v-for="(row, propertyName, index) in allRows" :key="index">
         <td v-for="rowObject in row" :key="rowObject.id">
           <div
             v-show="rowObject.edit == false"
@@ -37,6 +37,26 @@
             @keyup.enter="$event.target.blur()"
           />
         </td>
+      </tr> -->
+
+      <tr v-for="row in allRows" :key="row.id">
+        <td v-for="rowObject in row.rowObjects" :key="rowObject.id">
+          <div
+            v-show="rowObject.edit == false"
+            @dblclick="rowObject.edit = true"
+          >
+            {{ rowObject.value }}
+          </div>
+          <input
+            v-show="rowObject.edit == true"
+            v-model="rowObject.value"
+            v-on:blur="
+              rowObject.edit = false;
+              sendRowDetails( row.id,rowObject );
+            "
+            @keyup.enter="$event.target.blur()"
+          />
+        </td>
       </tr>
     </tbody>
   </table>
@@ -47,7 +67,18 @@ import { mapGetters, mapActions } from "vuex";
 
 export default {
   name: "Datatable1v",
-  methods: mapActions(["updateHeader", "updateRow"]),
+  methods: {
+    ...mapActions(["updateHeader", "updateRow"]),
+    
+    sendRowDetails(id,obj) {
+      const rowDetails = {};
+      rowDetails["id"] = id;
+      rowDetails["obj"] = obj;
+      console.log("rowDetails",rowDetails);
+
+      this.updateRow(rowDetails);
+    },
+  },
   computed: mapGetters(["allHeaders", "allRows"]),
 };
 </script>
