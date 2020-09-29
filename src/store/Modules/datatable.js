@@ -1,5 +1,5 @@
 //---------------------- application state store
-import Vue from "vue";
+// import Vue from "vue";
 const state = {
   headers: [
     { id: 0, value: "#", edit: false },
@@ -77,28 +77,67 @@ const getters = {
 // ========================================== Actions ================================
 const actions = {
   addRow({ commit }) {
-    const rowArray = [];
-    for (var i = 0; i < state.headers.length; i++) {
-      const rowObject = {};
-      if (i == 0) {
-        rowObject["id"] = i;
-        rowObject["value"] = Object.keys(state.rows).length + 1;
-        rowObject["edit"] = false;
-      } else {
-        rowObject["id"] = i;
-        rowObject["value"] = "col" + i;
-        rowObject["edit"] = false;
+    // const rowArray = [];
+    // for (var i = 0; i < state.headers.length; i++) {
+    //   const rowObject = {};
+    //   if (i == 0) {
+    //     rowObject["id"] = i;
+    //     rowObject["value"] = Object.keys(state.rows).length + 1;
+    //     rowObject["edit"] = false;
+    //   } else {
+    //     rowObject["id"] = i;
+    //     rowObject["value"] = "col" + i;
+    //     rowObject["edit"] = false;
+    //   }
+    //   rowArray.push(rowObject);
+    // }
+
+    const len = state.rows.length;
+    if (len != 0) {
+      const lastRow = state.rows[len - 1];
+      const newRow = {};
+      const newRowId = lastRow.id + 1;
+
+      newRow["id"] = newRowId;
+
+      const newRowObjects = [];
+
+      for (var i = 0; i < state.headers.length; i++) {
+        const rowObject = {};
+        if (i == 0) {
+          rowObject["id"] = i;
+          rowObject["value"] = newRowId + 1;
+          rowObject["edit"] = false;
+        } else {
+          rowObject["id"] = i;
+          rowObject["value"] = "col" + i;
+          rowObject["edit"] = false;
+        }
+        newRowObjects.push(rowObject);
       }
-      rowArray.push(rowObject);
+      newRow["rowObjects"] = newRowObjects;
+      commit("newRow", newRow);
+    } else {
+      const defaultRow = {
+        id: 0,
+        rowObjects: [
+          //rowDataObj
+          { id: 0, value: "1", edit: false },
+          { id: 1, value: "col1", edit: false },
+          { id: 2, value: "col2", edit: false },
+          { id: 3, value: "col3", edit: false },
+        ],
+      };
+      commit("newRow", defaultRow);
     }
-    commit("newRow", rowArray);
   },
 
   deleteRow({ commit }) {
-    const numberOfRows = Object.keys(state.rows).length;
-    if (numberOfRows != 0) {
-      commit("deleteRow", "num" + (numberOfRows - 1));
-    }
+    // const numberOfRows = Object.keys(state.rows).length;
+    // if (numberOfRows != 0) {
+    //   commit("deleteRow", "num" + (numberOfRows - 1));
+    // }
+    commit("deleteRow");
   },
 
   addHeader({ commit }) {
@@ -131,13 +170,18 @@ const actions = {
 
 //============================================ Mutations =================================
 const mutations = {
-  // newRow: (state, row) => state.rows.push(row),
-  newRow: (state, rowArray) => {
-    const rowNumber = "num" + Object.keys(state.rows).length;
-    Vue.set(state.rows, rowNumber, rowArray);
+  newRow: (state, newRow) => {
+    console.log(newRow);
+    state.rows.push(newRow);
   },
-  deleteRow: (state, name) => {
-    Vue.delete(state.rows, name);
+  // newRow: (state, len) => {
+  //   const rowNumber = "num" + Object.keys(state.rows).length;
+  //   Vue.set(state.rows, rowNumber, rowArray);
+  //   console.log(len);
+  // },
+  deleteRow: (state) => {
+    // Vue.delete(state.rows, name);
+    state.rows.pop();
   },
   addHeader: (state, header) => {
     state.headers.push(header);
