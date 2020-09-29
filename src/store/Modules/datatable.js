@@ -76,22 +76,24 @@ const getters = {
 };
 // ========================================== Actions ================================
 const actions = {
+  // -------------- Add Row Action ----------------
   addRow({ commit }) {
-    // const rowArray = [];
-    // for (var i = 0; i < state.headers.length; i++) {
-    //   const rowObject = {};
-    //   if (i == 0) {
-    //     rowObject["id"] = i;
-    //     rowObject["value"] = Object.keys(state.rows).length + 1;
-    //     rowObject["edit"] = false;
-    //   } else {
-    //     rowObject["id"] = i;
-    //     rowObject["value"] = "col" + i;
-    //     rowObject["edit"] = false;
-    //   }
-    //   rowArray.push(rowObject);
-    // }
-
+    /*
+    const rowArray = [];
+    for (var i = 0; i < state.headers.length; i++) {
+      const rowObject = {};
+      if (i == 0) {
+        rowObject["id"] = i;
+        rowObject["value"] = Object.keys(state.rows).length + 1;
+        rowObject["edit"] = false;
+      } else {
+        rowObject["id"] = i;
+        rowObject["value"] = "col" + i;
+        rowObject["edit"] = false;
+      }
+      rowArray.push(rowObject);
+    }
+    */
     const len = state.rows.length;
     if (len != 0) {
       const lastRow = state.rows[len - 1];
@@ -116,52 +118,78 @@ const actions = {
         newRowObjects.push(rowObject);
       }
       newRow["rowObjects"] = newRowObjects;
+      console.log("len != 0");
       commit("newRow", newRow);
     } else {
-      const defaultRow = {
-        id: 0,
-        rowObjects: [
-          //rowDataObj
-          { id: 0, value: "1", edit: false },
-          { id: 1, value: "col1", edit: false },
-          { id: 2, value: "col2", edit: false },
-          { id: 3, value: "col3", edit: false },
-        ],
-      };
+      const defaultRow = {};
+      defaultRow["id"] = 0;
+      const newRowObjects = [];
+      for (var d = 0; d < state.headers.length; d++) {
+        const rowObject = {};
+        if (d == 0) {
+          rowObject["id"] = d;
+          rowObject["value"] = d + 1;
+          rowObject["edit"] = false;
+        } else {
+          rowObject["id"] = d;
+          rowObject["value"] = "col" + d;
+          rowObject["edit"] = false;
+        }
+        newRowObjects.push(rowObject);
+      }
+      defaultRow["rowObjects"] = newRowObjects;
+      console.log("default row", defaultRow);
+      // need to be deleted
+      // id: 0,
+      //   rowObjects: [
+      //     //rowDataObj
+      //     { id: 0, value: "1", edit: false },
+      //     { id: 1, value: "col1", edit: false },
+      //     { id: 2, value: "col2", edit: false },
+      //     { id: 3, value: "col3", edit: false },
+      //   ],
       commit("newRow", defaultRow);
     }
   },
-
+  //----------------- Deleting Row Action ------------------
   deleteRow({ commit }) {
-    // const numberOfRows = Object.keys(state.rows).length;
-    // if (numberOfRows != 0) {
-    //   commit("deleteRow", "num" + (numberOfRows - 1));
-    // }
+    /*
+    const numberOfRows = Object.keys(state.rows).length;
+    if (numberOfRows != 0) {
+      commit("deleteRow", "num" + (numberOfRows - 1));
+    }
+    */
     commit("deleteRow");
   },
-
+  //-------------------- Add Header Action -----------------
   addHeader({ commit }) {
-    const newHeader = {};
-    newHeader["id"] = state.headers.length;
-    newHeader["value"] = "header" + state.headers.length;
-    newHeader["edit"] = false;
+    const len = state.headers.length;
+    if (len != 0) {
+      const newHeader = {};
+      newHeader["id"] = len;
+      newHeader["value"] = "header" + len;
+      newHeader["edit"] = false;
 
-    commit("addHeader", newHeader);
+      commit("addHeader", newHeader);
+    } else {
+      const defaultHeader = { id: 0, value: "#", edit: false };
+      commit("addHeader", defaultHeader);
+    }
     // console.log(state.rows["num0"]);
   },
-
+  //------------------ Delete Header Action ---------------------
   deleteHeader({ commit }) {
     var length = state.headers.length;
     if (length !== 0) {
       commit("deleteHeader", state.headers[length - 1].id);
     }
   },
-
+  //------------------ Update Header Action ------------
   updateHeader({ commit }, upHeader) {
     // we can construct a new header or evaluation
     commit("updateHeader", upHeader);
   },
-
+  //-------------- Update Row Action -------
   updateRow({ commit }, rowDetails) {
     // console.log("rowDetails", rowDetails);
     commit("updateRow", rowDetails);
@@ -170,21 +198,44 @@ const actions = {
 
 //============================================ Mutations =================================
 const mutations = {
+  // ---------------- Add Row ----------------
   newRow: (state, newRow) => {
     console.log(newRow);
+    //adding newRow object to the end of rows array
     state.rows.push(newRow);
   },
-  // newRow: (state, len) => {
-  //   const rowNumber = "num" + Object.keys(state.rows).length;
-  //   Vue.set(state.rows, rowNumber, rowArray);
-  //   console.log(len);
-  // },
+  /*
+  newRow: (state, len) => {
+    const rowNumber = "num" + Object.keys(state.rows).length;
+    Vue.set(state.rows, rowNumber, rowArray);
+    console.log(len);
+  },
+  */
+  //---------------------- Deleting Row --------------
   deleteRow: (state) => {
     // Vue.delete(state.rows, name);
+
+    //poping the last object from the rows array
     state.rows.pop();
   },
-  addHeader: (state, header) => {
-    state.headers.push(header);
+  //----------------------- Add Header ---------------
+  addHeader: (state, newHeader) => {
+    state.headers.push(newHeader);
+    if (newHeader.id != 0) {
+      state.rows.forEach((row) => {
+        const rowObject = {};
+        rowObject["id"] = newHeader.id;
+        rowObject["value"] = "col" + newHeader.id;
+        rowObject["edit"] = false;
+        row.rowObjects.push(rowObject);
+      });
+    }
+    // else {
+    //   const defaulRowObject ={}
+
+    // }
+
+    /*
     Object.keys(state.rows).forEach((rowName) => {
       const newRow = {};
       newRow["id"] = header.id;
@@ -192,13 +243,15 @@ const mutations = {
       newRow["edit"] = false;
       state.rows[rowName].push(newRow);
     });
+    */
   },
+  //------------------- Delete Header -------------------
   deleteHeader: (state, id) => {
     state.headers = state.headers.filter((header) => header.id !== id);
 
     Object.keys(state.rows).forEach((rowName) => state.rows[rowName].pop());
   },
-
+  //------------------- Update Header -----------------
   updateHeader: (state, upHeader) => {
     const index = state.headers.findIndex(
       (header) => header.id === upHeader.id
@@ -207,7 +260,7 @@ const mutations = {
       state.headers.splice(index, 1, upHeader);
     }
   },
-
+  //------------------ Update Row -----------------
   updateRow: (state, rowDetails) => {
     console.log("i am in mutation");
     console.log(rowDetails);
