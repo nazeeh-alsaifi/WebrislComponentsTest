@@ -153,13 +153,13 @@ const actions = {
   },
   //----------------- Deleting Row Action ------------------
   deleteRow({ commit }) {
+    commit("deleteRow");
     /*
     const numberOfRows = Object.keys(state.rows).length;
     if (numberOfRows != 0) {
       commit("deleteRow", "num" + (numberOfRows - 1));
     }
     */
-    commit("deleteRow");
   },
   //-------------------- Add Header Action -----------------
   addHeader({ commit }) {
@@ -179,9 +179,9 @@ const actions = {
   },
   //------------------ Delete Header Action ---------------------
   deleteHeader({ commit }) {
-    var length = state.headers.length;
-    if (length !== 0) {
-      commit("deleteHeader", state.headers[length - 1].id);
+    var len = state.headers.length;
+    if (len !== 0) {
+      commit("deleteHeader", state.headers[len - 1].id);
     }
   },
   //------------------ Update Header Action ------------
@@ -229,11 +229,15 @@ const mutations = {
         rowObject["edit"] = false;
         row.rowObjects.push(rowObject);
       });
+    } else {
+      state.rows.forEach((row, index) => {
+        const rowObject = {};
+        rowObject["id"] = 0;
+        rowObject["value"] = index + 1;
+        rowObject["edit"] = false;
+        row.rowObjects.push(rowObject);
+      });
     }
-    // else {
-    //   const defaulRowObject ={}
-
-    // }
 
     /*
     Object.keys(state.rows).forEach((rowName) => {
@@ -248,8 +252,8 @@ const mutations = {
   //------------------- Delete Header -------------------
   deleteHeader: (state, id) => {
     state.headers = state.headers.filter((header) => header.id !== id);
-
-    Object.keys(state.rows).forEach((rowName) => state.rows[rowName].pop());
+    state.rows.forEach((row) => row.rowObjects.pop());
+    // Object.keys(state.rows).forEach((rowName) => state.rows[rowName].pop());
   },
   //------------------- Update Header -----------------
   updateHeader: (state, upHeader) => {
