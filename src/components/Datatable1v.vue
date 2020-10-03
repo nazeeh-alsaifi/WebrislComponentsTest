@@ -52,7 +52,7 @@
             v-model="rowObject.value"
             v-on:blur="
               rowObject.edit = false;
-              sendRowDetails( row.id,rowObject );
+              sendRowDetails(row.id, rowObject);
             "
             @keyup.enter="$event.target.blur()"
           />
@@ -69,12 +69,12 @@ export default {
   name: "Datatable1v",
   methods: {
     ...mapActions(["updateHeader", "updateRow"]),
-    
-    sendRowDetails(id,obj) {
+
+    sendRowDetails(id, obj) {
       const rowDetails = {};
       rowDetails["id"] = id;
       rowDetails["obj"] = obj;
-      console.log("rowDetails",rowDetails);
+      console.log("rowDetails", rowDetails);
 
       this.updateRow(rowDetails);
     },
@@ -84,4 +84,10 @@ export default {
 </script>
 
 <style>
+/* input:focus {
+  outline: none;
+}
+input {
+  border: 0px;
+} */
 </style>
