@@ -4,6 +4,7 @@
     <HelloWorld msg="Welcome to Your Vue.js App" />
     <TableControl />
     <Datatable1v />
+    <Chart1v />
   </div>
 </template>
 
@@ -11,12 +12,14 @@
 import HelloWorld from "./components/HelloWorld.vue";
 import Datatable1v from "./components/Datatable1v";
 import TableControl from "./components/TableControl";
+import Chart1v from "./components/Chart1V";
 export default {
   name: "App",
   components: {
     HelloWorld,
     Datatable1v,
     TableControl,
+    Chart1v,
   },
 };
 </script>
