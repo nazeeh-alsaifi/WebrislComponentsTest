@@ -2,7 +2,7 @@
   <div class="d-flex justify-content-around">
     <div>
       x-Axis:
-      <select @change="filterTodos($event)">
+      <select @change="changeXaxis($event)">
         <option value=""></option>
         <option v-for="(headerName, index) in getAvailableXY" :key="index">
           {{ headerName }}
@@ -11,7 +11,7 @@
     </div>
     <div>
       y-Axis:
-      <select @change="filterTodos($event)">
+      <select @change="changeYaxis($event)">
         <option value=""></option>
         <option v-for="(headerName, index) in getAvailableXY" :key="index">
           {{ headerName }}
@@ -22,10 +22,11 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+import { mapActions, mapGetters } from "vuex";
 export default {
   name: "ChartControls",
   computed: mapGetters(["getAvailableXY"]),
+  methods: mapActions(["changeXaxis"]),
 };
 </script>
 

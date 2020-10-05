@@ -37,6 +37,6 @@ export default {
 <style>
 .small {
   max-width: 600px;
-  margin: 150px auto;
+  margin: 75px auto;
 }
 </style>

@@ -1,4 +1,6 @@
 // import Vue from "vue";
+
+// ========================================== State  ================================
 const state = {
   //   chartData: {
   //     labels: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
@@ -41,6 +43,7 @@ const state = {
   yAxesData: [1, 2, 3, 4, 5, 6],
 };
 
+// ========================================== Getters ================================
 const getters = {
   //   allChartData: (state) => state.chartData,
   allChartOptions: (state) => state.chartOptions,
@@ -48,6 +51,7 @@ const getters = {
   getyAxes: (state) => state.yAxesData,
 };
 
+// ========================================== Actions ================================
 const actions = {
   increment({ commit }) {
     // const newChartData = state.chartData;
@@ -63,8 +67,16 @@ const actions = {
     */
     commit("updateData");
   },
+
+  changeXaxis({ commit }, e) {
+    const headerName =
+      e.target.options[e.target.options.selectedIndex].innerText;
+
+    commit("changeXaxis", headerName);
+  },
 };
 
+//============================================ Mutations =================================
 const mutations = {
   updateData: (state) => {
     // console.log("newData", newData);
@@ -73,6 +85,11 @@ const mutations = {
     // Vue.set(state.chartData.datasets[0].data, newData);
     state.xAxesData.push(state.xAxesData.length + 2);
     state.yAxesData.push(state.yAxesData.length + 1);
+  },
+
+  changeXaxis: (state, headerName) => {
+    state.xAxesData = headerName;
+    console.log("changed the axis", headerName);
   },
 };
 
