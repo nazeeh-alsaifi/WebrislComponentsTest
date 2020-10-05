@@ -37,8 +37,8 @@ const state = {
     },
   },
 
-  xAxesData: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
-  yAxesData: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+  xAxesData: [2, 4, 6, 8, 10, 12],
+  yAxesData: [1, 2, 3, 4, 5, 6],
 };
 
 const getters = {
@@ -71,8 +71,8 @@ const mutations = {
     // console.log("newLabels", newLabels);
     // Vue.set(state.chartData, newChartData);
     // Vue.set(state.chartData.datasets[0].data, newData);
-    state.xAxesData.push(11);
-    state.yAxesData.push(11);
+    state.xAxesData.push(state.xAxesData.length + 2);
+    state.yAxesData.push(state.yAxesData.length + 1);
   },
 };
 

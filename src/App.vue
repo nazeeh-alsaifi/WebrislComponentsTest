@@ -4,6 +4,8 @@
     <HelloWorld msg="Welcome to Your Vue.js App" />
     <TableControl />
     <Datatable1v />
+    <ChartControls />
+
     <Chart1v />
   </div>
 </template>
@@ -13,6 +15,7 @@ import HelloWorld from "./components/HelloWorld.vue";
 import Datatable1v from "./components/Datatable1v";
 import TableControl from "./components/TableControl";
 import Chart1v from "./components/Chart1V";
+import ChartControls from "./components/ChartControls";
 export default {
   name: "App",
   components: {
@@ -20,6 +23,7 @@ export default {
     Datatable1v,
     TableControl,
     Chart1v,
+    ChartControls,
   },
 };
 </script>
