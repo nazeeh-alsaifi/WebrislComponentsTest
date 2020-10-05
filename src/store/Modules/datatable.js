@@ -1,5 +1,6 @@
-//---------------------- application state store
 // import Vue from "vue";
+
+// ========================================== state ================================
 const state = {
   headers: [
     { id: 0, value: "#", edit: false },
@@ -69,6 +70,7 @@ const state = {
   ],
 };
 
+// ========================================== Getters ================================
 const getters = {
   allHeaders: (state) => state.headers,
   allRows: (state) => state.rows,
@@ -79,7 +81,15 @@ const getters = {
       .forEach((remainingHeaders) => headersNames.push(remainingHeaders.value));
     return headersNames;
   },
-  // allRows2: (state) => state.rows,
+  getChartHeaderData: (state) => (headerName) => {
+    console.log("getChartHeaderData:", headerName);
+    const headerID = state.headers.filter(
+      (header) => header.value === headerName
+    )[0].id;
+    console.log("getChartHeaderData:", headerID);
+    return headerID;
+  },
+  // allRows2: (state) => state.rows, =
 };
 // ========================================== Actions ================================
 const actions = {
