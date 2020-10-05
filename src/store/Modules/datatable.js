@@ -72,6 +72,13 @@ const state = {
 const getters = {
   allHeaders: (state) => state.headers,
   allRows: (state) => state.rows,
+  getAvailableXY: (state) => {
+    const headersNames = [];
+    state.headers
+      .filter((header) => header.id != 0)
+      .forEach((remainingHeaders) => headersNames.push(remainingHeaders.value));
+    return headersNames;
+  },
   // allRows2: (state) => state.rows,
 };
 // ========================================== Actions ================================
