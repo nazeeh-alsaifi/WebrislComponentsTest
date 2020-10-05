@@ -28,7 +28,7 @@ export default {
         ],
       };
     },
-    ...mapGetters(["allChartData", "allChartOptions", "getxAxes", "getyAxes"]),
+    ...mapGetters(["allChartOptions", "getxAxes", "getyAxes"]),
   },
   methods: mapActions(["increment"]),
 };
