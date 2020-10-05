@@ -1,18 +1,36 @@
 <template>
   <div class="small">
-    <LineChart :chartData="allChartData" :options="allChartOptions"></LineChart>
+    <LineChart :chartData="datasetsfull" :options="allChartOptions"></LineChart>
+    <button type="button" class="btn btn-success mr-2" @click="increment">
+      Increment
+    </button>
   </div>
 </template>
 
 <script>
 import LineChart from "./LineChar.vue";
-import { mapGetters } from "vuex";
+import { mapGetters, mapActions } from "vuex";
 export default {
   components: {
     LineChart,
   },
-  computed: mapGetters(["allChartData", "allChartOptions"]),
-  methods: {},
+  computed: {
+    datasetsfull() {
+      return {
+        labels: this.getyAxes,
+        datasets: [
+          {
+            label: "Data One",
+            showLine: false,
+            backgroundColor: "#f87979",
+            data: this.getxAxes,
+          },
+        ],
+      };
+    },
+    ...mapGetters(["allChartData", "allChartOptions", "getxAxes", "getyAxes"]),
+  },
+  methods: mapActions(["increment"]),
 };
 </script>
 
