@@ -1,8 +1,11 @@
 <template>
   <div class="small">
     <LineChart :chartData="datasetsfull" :options="allChartOptions"></LineChart>
-    <button type="button" class="btn btn-success mr-2" @click="increment">
-      Increment
+    <button type="button" class="btn btn-success mr-2" @click="fillData()">
+      fillData
+    </button>
+    <button type="button" class="btn btn-success mr-2" @click="render()">
+      render
     </button>
   </div>
 </template>
@@ -14,23 +17,33 @@ export default {
   components: {
     LineChart,
   },
+
   computed: {
     datasetsfull() {
       return {
-        labels: this.getxAxes,
+        labels: this.calculateHeadersData[0].data,
         datasets: [
           {
             label: "Data One",
             showLine: false,
             backgroundColor: "#f87979",
-            data: this.getyAxes,
+            data: this.calculateHeadersData[1].data,
           },
         ],
       };
     },
-    ...mapGetters(["allChartOptions", "getxAxes", "getyAxes"]),
+
+    ...mapGetters([
+      "allChartOptions",
+      "getxAxes",
+      "getyAxes",
+      "getAvailableXY",
+      "calculateHeadersData",
+    ]),
   },
-  methods: mapActions(["increment"]),
+  methods: {
+    ...mapActions(["increment"]),
+  },
 };
 </script>
 

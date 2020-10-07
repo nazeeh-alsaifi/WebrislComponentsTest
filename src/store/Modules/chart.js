@@ -39,8 +39,8 @@ const state = {
     },
   },
 
-  xAxesData: [2, 4, 6, 8, 10, 12],
-  yAxesData: [1, 2, 3, 4, 5, 6],
+  xAxesData: [2, 4, 6],
+  yAxesData: [1, 2, 3],
 };
 
 // ========================================== Getters ================================
@@ -68,11 +68,12 @@ const actions = {
     commit("updateData");
   },
 
-  changeXaxis({ commit }, e) {
+  changeXaxis({ commit, rootGetters }, e) {
     const headerName =
       e.target.options[e.target.options.selectedIndex].innerText;
-
-    commit("changeXaxis", headerName);
+    // console.log("changeXaxis", headerName, headerData);
+    const headerData = rootGetters.getChartHeaderData(headerName.trim());
+    commit("changeXaxis", headerData);
   },
 };
 
@@ -83,13 +84,22 @@ const mutations = {
     // console.log("newLabels", newLabels);
     // Vue.set(state.chartData, newChartData);
     // Vue.set(state.chartData.datasets[0].data, newData);
-    state.xAxesData.push(state.xAxesData.length + 2);
-    state.yAxesData.push(state.yAxesData.length + 1);
+    state.xAxesData = [6, 7, 8, 9];
+    state.yAxesData = [6, 7, 8, 10];
   },
 
-  changeXaxis: (state, headerName) => {
-    state.xAxesData = headerName;
-    console.log("changed the axis", headerName);
+  changeXaxis: (state, headerData) => {
+    // emptying the array
+    // console.log(state.xAxes.length);
+    // state.xAxes.length = 0;
+    // state.yAxes.length = 0;
+    state.xAxesData.splice(0, state.xAxesData.length);
+    state.yAxesData.splice(0, state.yAxesData.length);
+    headerData.forEach((data) => {
+      state.xAxesData.push(data);
+      state.yAxesData.push(data);
+    });
+    console.log("changed the axis", headerData);
   },
 };
 
