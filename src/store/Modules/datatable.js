@@ -44,27 +44,27 @@ const state = {
       rowObjects: [
         //rowDataObj
         { id: 0, value: "1", edit: false },
-        { id: 1, value: "col1", edit: false },
-        { id: 2, value: "col2", edit: false },
-        { id: 3, value: "col3", edit: false },
+        { id: 1, value: "4", edit: false },
+        { id: 2, value: "6", edit: false },
+        { id: 3, value: "8", edit: false },
       ],
     },
     {
       id: 1,
       rowObjects: [
         { id: 0, value: "2", edit: false },
-        { id: 1, value: "col1", edit: false },
-        { id: 2, value: "col2", edit: false },
-        { id: 3, value: "col3", edit: false },
+        { id: 1, value: "3", edit: false },
+        { id: 2, value: "6", edit: false },
+        { id: 3, value: "9", edit: false },
       ],
     },
     {
       id: 2,
       rowObjects: [
         { id: 0, value: "3", edit: false },
-        { id: 1, value: "col1", edit: false },
-        { id: 2, value: "col2", edit: false },
-        { id: 3, value: "col3", edit: false },
+        { id: 1, value: "8", edit: false },
+        { id: 2, value: "12", edit: false },
+        { id: 3, value: "16", edit: false },
       ],
     },
   ],
@@ -74,6 +74,8 @@ const state = {
 const getters = {
   allHeaders: (state) => state.headers,
   allRows: (state) => state.rows,
+
+  //----------- helper functions
   getAvailableXY: (state) => {
     const headersNames = [];
     state.headers
@@ -86,9 +88,32 @@ const getters = {
     const headerID = state.headers.filter(
       (header) => header.value === headerName
     )[0].id;
-    console.log("getChartHeaderData:", headerID);
-    return headerID;
+    const headerData = [];
+    state.rows.forEach((row) =>
+      headerData.push(row.rowObjects[headerID].value)
+    );
+    console.log("getChartHeaderData:", headerID, headerData);
+    return headerData;
   },
+  // ----------------- end helper functions
+  calculateHeadersData: (state, getters) => {
+    const headerNameAndDataArray = [];
+    getters.getAvailableXY.forEach((headerName) => {
+      const headerNameAndDataObj = {};
+      headerNameAndDataObj["name"] = headerName;
+      headerNameAndDataArray.push(headerNameAndDataObj);
+      headerNameAndDataObj["data"] = getters.getChartHeaderData(headerName);
+    });
+
+    // const HeaderNameAndDataObj = {
+    //   name: "header1",
+    //   data: [],
+    // };
+    // console.log(headerNameAndDataArray);
+    // console.log("getters", getters.getAvailableXY);
+    return headerNameAndDataArray;
+  },
+
   // allRows2: (state) => state.rows, =
 };
 // ========================================== Actions ================================
