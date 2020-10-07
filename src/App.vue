@@ -6,7 +6,9 @@
     <Datatable1v />
     <ChartControls />
 
-    <Chart1v />
+    <Chart1V />
+
+    <Chart2V />
   </div>
 </template>
 
@@ -14,16 +16,18 @@
 import HelloWorld from "./components/HelloWorld.vue";
 import Datatable1v from "./components/Datatable1v";
 import TableControl from "./components/TableControl";
-import Chart1v from "./components/Chart1V";
+import Chart1V from "./components/Chart1V";
 import ChartControls from "./components/ChartControls";
+import Chart2V from "./components/Chart2V";
 export default {
   name: "App",
   components: {
     HelloWorld,
     Datatable1v,
     TableControl,
-    Chart1v,
+    Chart1V,
     ChartControls,
+    Chart2V,
   },
 };
 </script>

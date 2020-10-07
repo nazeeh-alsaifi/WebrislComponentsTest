@@ -18,6 +18,19 @@ const state = {
   //       },
   //     ],
   //   },
+
+  chart: {
+    labels: [1, 2, 3, 4, 5],
+    datasets: [
+      {
+        label: "Data One",
+        showLine: false,
+        backgroundColor: "#f87979",
+        data: [2, 4, 6, 8, 10],
+      },
+    ],
+  },
+
   chartOptions: {
     scales: {
       yAxes: [
@@ -49,6 +62,7 @@ const getters = {
   allChartOptions: (state) => state.chartOptions,
   getxAxes: (state) => state.xAxesData,
   getyAxes: (state) => state.yAxesData,
+  getChart: (state) => state.chart,
 };
 
 // ========================================== Actions ================================
@@ -74,6 +88,9 @@ const actions = {
     // console.log("changeXaxis", headerName, headerData);
     const headerData = rootGetters.getChartHeaderData(headerName.trim());
     commit("changeXaxis", headerData);
+  },
+  changeChart({ commit }, newChart) {
+    commit("changeChart", newChart);
   },
 };
 
@@ -101,6 +118,7 @@ const mutations = {
     });
     console.log("changed the axis", headerData);
   },
+  changeChart: (state, newChart) => (state.chart = newChart),
 };
 
 export default {
