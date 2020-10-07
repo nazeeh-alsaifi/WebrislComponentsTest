@@ -17,13 +17,13 @@ export default {
   computed: {
     datasetsfull() {
       return {
-        labels: this.getyAxes,
+        labels: this.getxAxes,
         datasets: [
           {
             label: "Data One",
             showLine: false,
             backgroundColor: "#f87979",
-            data: this.getxAxes,
+            data: this.getyAxes,
           },
         ],
       };
