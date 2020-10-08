@@ -17,11 +17,32 @@
     >
       set computed property
     </button>
+
+    <div class="d-flex justify-content-around">
+      <div>
+        x-Axis:
+        <select @change="changeXaxis($event)">
+          <option value=""></option>
+          <option v-for="(headerName, index) in getAvailableXY" :key="index">
+            {{ headerName }}
+          </option>
+        </select>
+      </div>
+      <div>
+        y-Axis:
+        <select @change="changeYaxis($event)">
+          <option value=""></option>
+          <option v-for="(headerName, index) in getAvailableXY" :key="index">
+            {{ headerName }}
+          </option>
+        </select>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
-import LineChart from "./LineChar.vue";
+import LineChart from "./LineChart.vue";
 import { mapGetters, mapActions } from "vuex";
 export default {
   components: {
@@ -55,17 +76,6 @@ export default {
       set: function (newLabelAndData) {
         this.label = newLabelAndData.label;
         this.data = newLabelAndData.data;
-        // {
-        //   labels: newValue1.labels,
-        //   datasets: [
-        //     {
-        //       label: "Data One",
-        //       showLine: false,
-        //       backgroundColor: "#f87979",
-        //       data: newValue1.data,
-        //     },
-        //   ],
-        // };
       },
     },
 
