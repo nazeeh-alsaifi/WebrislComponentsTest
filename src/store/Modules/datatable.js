@@ -75,7 +75,6 @@ const getters = {
   allHeaders: (state) => state.headers,
   allRows: (state) => state.rows,
 
-  //----------- helper functions
   getAvailableXY: (state) => {
     const headersNames = [];
     state.headers
@@ -83,8 +82,9 @@ const getters = {
       .forEach((remainingHeaders) => headersNames.push(remainingHeaders.value));
     return headersNames;
   },
+
   getChartHeaderData: (state) => (headerName) => {
-    console.log("getChartHeaderData:", headerName);
+    // console.log("getChartHeaderData:", headerName);
     const headerID = state.headers.filter(
       (header) => header.value === headerName
     )[0].id;
@@ -92,10 +92,10 @@ const getters = {
     state.rows.forEach((row) =>
       headerData.push(row.rowObjects[headerID].value)
     );
-    console.log("getChartHeaderData:", headerID, headerData);
+    // console.log("getChartHeaderData:", headerID, headerData);
     return headerData;
   },
-  // ----------------- end helper functions
+
   calculateHeadersData: (state, getters) => {
     const headerNameAndDataArray = [];
     getters.getAvailableXY.forEach((headerName) => {
@@ -104,17 +104,22 @@ const getters = {
       headerNameAndDataArray.push(headerNameAndDataObj);
       headerNameAndDataObj["data"] = getters.getChartHeaderData(headerName);
     });
-
-    // const HeaderNameAndDataObj = {
-    //   name: "header1",
-    //   data: [],
-    // };
-    // console.log(headerNameAndDataArray);
-    // console.log("getters", getters.getAvailableXY);
     return headerNameAndDataArray;
   },
 
-  // allRows2: (state) => state.rows, =
+  calculateScatterData: (state, getters) => (headerName1, headerName2) => {
+    const h1 = getters.getChartHeaderData(headerName1);
+    const h2 = getters.getChartHeaderData(headerName2);
+    const data = [];
+    for (var i = 0; i < h1.length; i++) {
+      const temp = {};
+      temp["x"] = h1[i];
+      temp["y"] = h2[i];
+      data.push(temp);
+    }
+    console.log("data:", data);
+    return data;
+  },
 };
 // ========================================== Actions ================================
 const actions = {
