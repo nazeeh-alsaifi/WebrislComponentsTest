@@ -1,18 +1,10 @@
 <template>
   <div class="small">
-    <LineChart :chartData="datacollection" :options="{}"></LineChart>
-    <div>
-      <button type="button" class="btn btn-success mr-2" @click="fillData()">
-        fillData
-      </button>
-      <button type="button" class="btn btn-success mr-2" @click="newData()">
-        NewData
-      </button>
-      <button type="button" class="btn btn-success mr-2" @click="newChart()">
-        new chart
-      </button>
-    </div>
-    <div id="chart-controls" class="d-flex justify-content-around">
+    <ScatterChart
+      :chartData="datacollection"
+      :options="this.options"
+    ></ScatterChart>
+    <div class="d-flex justify-content-around">
       <div>
         x-Axis:
         <select @change="changeXaxis($event)">
@@ -36,64 +28,55 @@
 </template>
 
 <script>
-import LineChart from "./LineChar.vue";
-import { mapGetters, mapActions } from "vuex";
+import ScatterChart from "./ScatterChart.vue";
+import { mapGetters } from "vuex";
 export default {
   components: {
-    LineChart,
+    ScatterChart,
   },
-  computed: { ...mapGetters(["getAvailableXY", "getChart"]) },
   data() {
     return {
-      datacollection: null,
+      // datacollection: null,
+
+      options: { responsive: true, maintainAspectRatio: false },
+      Xheader: "header1",
+      Yheader: "header2",
     };
   },
-  mounted() {
-    this.fillData();
+  computed: {
+    ...mapGetters(["calculateScatterData", "getAvailableXY"]),
+    datacollection: {
+      get: function () {
+        return {
+          datasets: [
+            {
+              label: "My First dataset",
+              borderColor: "#2196f3",
+              backgroundColor: "#2196f3",
+              data: this.calculateScatterData(this.Xheader, this.Yheader),
+            },
+          ],
+        };
+      },
+      set: function (newHeaders) {
+        this.Xheader = newHeaders.x;
+        this.Yheader = newHeaders.y;
+      },
+    },
   },
-  methods: {
-    ...mapActions(["changeChart"]),
-    fillData() {
-      this.datacollection = {
-        labels: [1, 2, 3],
-        datasets: [
-          {
-            label: "Data One",
-            showLine: false,
-            backgroundColor: "#f87979",
-            data: [2, 4, 6],
-          },
-        ],
-      };
-    },
-    newData() {
-      this.datacollection = {
-        labels: [1, 2, 3, 4],
-        datasets: [
-          {
-            label: "Data One",
-            showLine: false,
-            backgroundColor: "#f87979",
-            data: [2, 4, 6, 8],
-          },
-        ],
-      };
-    },
-    newChart() {
-      this.changeChart({
-        labels: [1, 2, 3, 4],
-        datasets: [
-          {
-            label: "Data One",
-            showLine: false,
-            backgroundColor: "#f87979",
-            data: [2, 4, 6, 8],
-          },
-        ],
-      });
-    },
 
-    // changeXaxis(e) {},
+  mounted() {},
+  methods: {
+    changeXaxis(e) {
+      const headerName =
+        e.target.options[e.target.options.selectedIndex].innerText;
+      this.Xheader = headerName.trim();
+    },
+    changeYaxis(e) {
+      const headerName =
+        e.target.options[e.target.options.selectedIndex].innerText;
+      this.Yheader = headerName.trim();
+    },
   },
 };
 </script>
