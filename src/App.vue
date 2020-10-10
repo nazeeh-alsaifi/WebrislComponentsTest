@@ -1,5 +1,6 @@
 <template>
   <div id="app">
+    <Movable1 />
     <img alt="Vue logo" src="./assets/logo.png" />
     <HelloWorld msg="Welcome to Your Vue.js App" />
     <TableControl />
@@ -20,6 +21,7 @@ import TableControl from "./components/TableControl";
 // import Chart1V from "./components/Chart1V";
 // import ChartControls from "./components/ChartControls";
 import Chart2V from "./components/Chart2V";
+import Movable1 from "./components/Movable1";
 export default {
   name: "App",
   components: {
@@ -29,6 +31,7 @@ export default {
     // Chart1V,
     // ChartControls,
     Chart2V,
+    Movable1,
   },
 };
 </script>
