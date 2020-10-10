@@ -11,6 +11,7 @@
     -->
 
     <Chart2V />
+    <Video1V />
   </div>
 </template>
 
@@ -22,6 +23,7 @@ import TableControl from "./components/TableControl";
 // import ChartControls from "./components/ChartControls";
 import Chart2V from "./components/Chart2V";
 import Movable1 from "./components/Movable1";
+import Video1V from "./components/Video1V";
 export default {
   name: "App",
   components: {
@@ -32,6 +34,7 @@ export default {
     // ChartControls,
     Chart2V,
     Movable1,
+    Video1V,
   },
 };
 </script>
