@@ -1,6 +1,9 @@
 <template>
-  <div>
-    <video ref="videoPlayer" class="video-js" width="600" height="300">
+  <div class="container mb-5 mt-5">
+    <video
+      ref="videoPlayer"
+      class="video-js vjs-fluid vjs-default-skin vjs-big-play-centered"
+    >
       <source :src="sources.src" :type="sources.type" />
     </video>
   </div>

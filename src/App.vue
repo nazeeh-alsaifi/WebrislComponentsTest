@@ -3,15 +3,14 @@
     <Movable1 />
     <img alt="Vue logo" src="./assets/logo.png" />
     <HelloWorld msg="Welcome to Your Vue.js App" />
+    <Video1V />
     <TableControl />
     <Datatable1v />
     <!-- 
     <ChartControls />
     <Chart1V /> 
     -->
-
     <Chart2V />
-    <Video1V />
   </div>
 </template>
 
