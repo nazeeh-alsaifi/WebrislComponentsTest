@@ -15,7 +15,10 @@ export default {
     options: {
       type: Object,
       default() {
-        return {};
+        return {
+          autoplay: false,
+          controls: true,
+        };
       },
     },
   },
