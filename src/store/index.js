@@ -2,7 +2,7 @@ import Vue from "vue";
 import Vuex from "vuex";
 import datatable from "./Modules/datatable";
 import chart from "./Modules/chart";
-
+import videoStore from "./Modules/videoStore";
 Vue.use(Vuex);
 
 export default new Vuex.Store({
@@ -12,5 +12,6 @@ export default new Vuex.Store({
   modules: {
     datatable,
     chart,
+    videoStore,
   },
 });
