@@ -1,9 +1,8 @@
-// ========================================== State  ================================
 const state = {
   source: {
     id: "video-1",
-    src: "http://vjs.zencdn.net/v/oceans.mp4",
-    poster: "http://vjs.zencdn.net/v/oceans.png",
+    src: require("@/assets/oceans.mp4"),
+    poster: require("@/assets/oceans.png"),
     type: "video/mp4",
     dataSetup: "{}",
   },
@@ -15,10 +14,19 @@ const getters = {
 };
 
 // ========================================== Actions ================================
-const actions = {};
+const actions = {
+  changeSource({ commit }) {
+    commit("changeSource");
+  },
+};
 
 //============================================ Mutations =================================
-const mutations = {};
+const mutations = {
+  changeSource: (state) => {
+    const newSource = {};
+    state.source = newSource;
+  },
+};
 
 export default {
   state,
