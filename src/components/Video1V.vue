@@ -3,9 +3,9 @@
     <video
       ref="videoPlayer"
       class="video-js vjs-fluid vjs-default-skin vjs-big-play-centered"
-      :poster="getSource.poster"
+      :poster="getCurrentSource.poster"
     >
-      <source :src="getSource.src" :type="getSource.type" />
+      <source :src="getCurrentSource.src" :type="getCurrentSource.type" />
     </video>
     <button type="button" class="btn btn-success mr-2" @click="loadSource">
       change source
@@ -15,7 +15,7 @@
 
 <script>
 import videojs from "video.js";
-import { mapGetters } from "vuex";
+import { mapActions, mapGetters } from "vuex";
 
 export default {
   name: "Video1V",
@@ -42,7 +42,14 @@ export default {
       // },
     };
   },
-  computed: { ...mapGetters(["getSource"]) },
+  computed: { ...mapGetters(["getSources", "getCurrentSource"]) },
+  methods: {
+    ...mapActions(["changeSource"]),
+    loadSource() {
+      // this.changeSource();
+      this.player.src(this.getSources[1]);
+    },
+  },
   mounted() {
     this.player = videojs(
       this.$refs.videoPlayer,
