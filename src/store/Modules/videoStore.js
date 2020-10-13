@@ -18,8 +18,8 @@ const state = {
   currentSourceIndex: 0,
   currentSource: {
     id: "video-1",
-    src: require("@/assets/oceans.mp4"),
-    poster: require("@/assets/oceans.png"),
+    src: require("@/assets/bunny.mp4"),
+    poster: require("@/assets/bunny.png"),
     type: "video/mp4",
     dataSetup: "{}",
   },
