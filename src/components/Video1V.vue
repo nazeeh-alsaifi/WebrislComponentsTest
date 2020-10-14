@@ -31,6 +31,15 @@ export default {
           autoplay: false,
           controls: true,
           TitleBar: { text: "The Title of The Video!" },
+          controlBar: {
+            children: {
+              playToggle: true,
+              CurrentTimeDisplay: true,
+              ProgressControl: { liveui: true },
+              RemainingTimeDisplay: true,
+              FullscreenToggle: true,
+            },
+          },
         };
       },
     },
