@@ -9,11 +9,11 @@
         <source :src="getCurrentSource.src" :type="getCurrentSource.type" />
       </video>
     </div>
-    <!-- <div id="video_buttons">
-      <button type="button" class="btn btn-success mr-2" @click="loadSource">
+    <div id="video_buttons">
+      <button type="button" class="btn btn-success mr-2" @click="playerGetTime">
         change source
       </button>
-    </div> -->
+    </div>
   </div>
 </template>
 
@@ -33,8 +33,9 @@ export default {
           TitleBar: { text: {} },
           controlBar: {
             children: {
+              SkipBackwardButton: true,
               playToggle: true,
-              SkipForwardButton: { text: ">" },
+              SkipForwardButton: true,
               CurrentTimeDisplay: true,
               ProgressControl: { liveui: true },
               RemainingTimeDisplay: true,
@@ -67,6 +68,10 @@ export default {
         type: "video/mp4",
       });
     },
+    playerGetTime() {
+      const now = this.player.currentTime();
+      console.log(now);
+    },
   },
   mounted() {
     //--------------- skip forward button -----------------------
@@ -74,20 +79,48 @@ export default {
     class SkipForwardButton extends VjsButton {
       constructor(player, options) {
         super(player, options);
-        if (options.text) {
-          this.updateTextContent(options.text);
-        }
+        this.addClass("vjs-icon-next-item");
+        this.controlText("Next");
+        // if (options.text) {
+        //   this.updateTextContent(options.text);
+        //   this.addClass("vjs-icon-previous-item");
+        // }
       }
 
-      updateTextContent(text) {
-        if (typeof text !== "string") {
-          text = "Title Unknown";
-        }
-        videojs.dom.emptyEl(this.el());
-        videojs.dom.appendContent(this.el(), text);
-      }
+      // updateTextContent(text) {
+      //   if (typeof text !== "string") {
+      //     text = "Title Unknown";
+      //   }
+      //   videojs.dom.emptyEl(this.el());
+      //   videojs.dom.appendContent(this.el(), text);
+      // }
+
       handleClick() {
-        console.log("clicked button ");
+        console.log("clicked button ", this.el());
+      }
+    }
+    class SkipBackwardButton extends VjsButton {
+      constructor(player, options) {
+        super(player, options);
+        this.addClass("vjs-icon-previous-item");
+        this.controlText("Next");
+        // if (options.text) {
+        //   this.updateTextContent(options.text);
+        //   this.addClass("vjs-icon-previous-item");
+        // }
+      }
+
+      // updateTextContent(text) {
+      //   if (typeof text !== "string") {
+      //     text = "Title Unknown";
+      //   }
+      //   videojs.dom.emptyEl(this.el());
+      //   videojs.dom.appendContent(this.el(), text);
+      // }
+
+      handleClick() {
+        const now = "";
+        console.log(now);
       }
     }
 
@@ -118,6 +151,9 @@ export default {
     //------- Regestring componenets------------
     videojs.registerComponent("TitleBar", TitleBar);
     videojs.registerComponent("SkipForwardButton", SkipForwardButton);
+    videojs.registerComponent("SkipBackwardButton", SkipBackwardButton);
+
+    // videojs.registerComponent("NextButton", NextButton);
 
     //------ player
     this.player = videojs(
@@ -167,30 +203,5 @@ export default {
 </script>
 
 <style>
-.video-js .vjs-title-bar {
-  background: rgba(0, 0, 0, 0.5);
-  color: white;
-
-  /*
-    By default, do not show the title bar.
-  */
-  display: none;
-  font-size: 2em;
-  padding: 0.5em;
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-}
-
-/* 
-  Only show the title bar after playback has begun (so as not to hide
-  the big play button) and only when paused or when the user is 
-  interacting with the player.
-*/
-.video-js.vjs-paused.vjs-has-started .vjs-title-bar,
-.video-js.vjs-user-active.vjs-has-started .vjs-title-bar {
-  display: block;
-}
 </style>
 
