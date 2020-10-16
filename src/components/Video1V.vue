@@ -79,47 +79,30 @@ export default {
     class SkipForwardButton extends VjsButton {
       constructor(player, options) {
         super(player, options);
-        this.addClass("vjs-icon-next-item");
         this.controlText("Next");
-        // if (options.text) {
-        //   this.updateTextContent(options.text);
-        //   this.addClass("vjs-icon-previous-item");
-        // }
+      }
+      buildCSSClass() {
+        return `vjs-skip-forward-item ${super.buildCSSClass()}`;
       }
 
-      // updateTextContent(text) {
-      //   if (typeof text !== "string") {
-      //     text = "Title Unknown";
-      //   }
-      //   videojs.dom.emptyEl(this.el());
-      //   videojs.dom.appendContent(this.el(), text);
-      // }
-
       handleClick() {
-        console.log("clicked button ", this.el());
+        const now = this.player_.currentTime();
+        this.player_.currentTime(now - 2);
+        console.log("clicked button", now);
       }
     }
     class SkipBackwardButton extends VjsButton {
       constructor(player, options) {
         super(player, options);
-        this.addClass("vjs-icon-previous-item");
         this.controlText("Next");
-        // if (options.text) {
-        //   this.updateTextContent(options.text);
-        //   this.addClass("vjs-icon-previous-item");
-        // }
       }
 
-      // updateTextContent(text) {
-      //   if (typeof text !== "string") {
-      //     text = "Title Unknown";
-      //   }
-      //   videojs.dom.emptyEl(this.el());
-      //   videojs.dom.appendContent(this.el(), text);
-      // }
-
+      buildCSSClass() {
+        return `vjs-skip-backward-item ${super.buildCSSClass()}`;
+      }
       handleClick() {
-        const now = "";
+        const now = this.player_.currentTime();
+        this.player_.currentTime(now - 0.5);
         console.log(now);
       }
     }
@@ -153,8 +136,6 @@ export default {
     videojs.registerComponent("SkipForwardButton", SkipForwardButton);
     videojs.registerComponent("SkipBackwardButton", SkipBackwardButton);
 
-    // videojs.registerComponent("NextButton", NextButton);
-
     //------ player
     this.player = videojs(
       this.$refs.videoPlayer,
@@ -163,36 +144,6 @@ export default {
         console.log("onPlayerReady", this);
       }
     );
-
-    // var skipBehindButton = this.player.controlBar.addChild("button");
-    // var skipBehindButtonDom = skipBehindButton.el();
-    // skipBehindButtonDom.innerHTML = ">";
-    // skipBehindButton.addClass("buttonClass");
-    // skipBehindButtonDom.onclick = skipBasedOnFrames(120);
-    // function skipBasedOnFrames(numOfFramesPerSec) {
-    //   const skipBy = 1 / numOfFramesPerSec;
-    //   console.log(skipBy);
-    //   this.player.currentTime(this.player.currentTime() + 30);
-    // }
-    // console.log(skipBehindButton);
-    // console.log(skipBehindButtonDom);
-    // var player = videojs('some-video-id');
-    // var Button = videojs.getComponent("Button");
-    // var button = new Button(this.player, {
-    //   clickHandler: function () {
-    //     videojs.log("Clicked");
-    //   },
-    // });
-    // console.log(button.el());
-
-    // button = this.player.addChild("button", {
-    //   text: "Press Me",
-    //   buttonChildExample: {
-    //     buttonChildOption: true,
-    //   },
-    // });
-
-    // console.log(button.el());
   },
   beforeDestroy() {
     if (this.player) {
@@ -202,6 +153,14 @@ export default {
 };
 </script>
 
-<style>
+<style >
+.video-js .vjs-skip-forward-item .vjs-icon-placeholder:before {
+  content: "\f11f";
+  font-family: "VideoJs";
+}
+.video-js .vjs-skip-backward-item .vjs-icon-placeholder:before {
+  content: "\f120";
+  font-family: "VideoJs";
+}
 </style>
 
