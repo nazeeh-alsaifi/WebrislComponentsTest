@@ -10,7 +10,7 @@
       </video>
     </div>
     <div id="video_buttons">
-      <button type="button" class="btn btn-success mr-2" @click="playerGetTime">
+      <button type="button" class="btn btn-success mr-2" @click="loadSource">
         change source
       </button>
     </div>
@@ -87,7 +87,7 @@ export default {
 
       handleClick() {
         const now = this.player_.currentTime();
-        this.player_.currentTime(now - 2);
+        this.player_.currentTime(now + 2);
         console.log("clicked button", now);
       }
     }
@@ -161,6 +161,32 @@ export default {
 .video-js .vjs-skip-backward-item .vjs-icon-placeholder:before {
   content: "\f120";
   font-family: "VideoJs";
+}
+
+.video-js .vjs-title-bar {
+  background: rgba(0, 0, 0, 0.5);
+  color: white;
+
+  /*
+    By default, do not show the title bar.
+  */
+  display: none;
+  font-size: 2em;
+  padding: 0.5em;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+}
+
+/* 
+  Only show the title bar after playback has begun (so as not to hide
+  the big play button) and only when paused or when the user is 
+  interacting with the player.
+*/
+.video-js.vjs-paused.vjs-has-started .vjs-title-bar,
+.video-js.vjs-user-active.vjs-has-started .vjs-title-bar {
+  display: block;
 }
 </style>
 
