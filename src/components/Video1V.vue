@@ -33,9 +33,9 @@ export default {
           TitleBar: { text: {} },
           controlBar: {
             children: {
-              SkipBackwardButton: true,
+              SkipBackwardButton: { fps: 25 },
               playToggle: true,
-              SkipForwardButton: true,
+              SkipForwardButton: { fps: 25 },
               CurrentTimeDisplay: true,
               ProgressControl: { liveui: true },
               RemainingTimeDisplay: true,
@@ -80,30 +80,37 @@ export default {
       constructor(player, options) {
         super(player, options);
         this.controlText("Next");
+        this.options = options;
+        this.player = player;
       }
       buildCSSClass() {
         return `vjs-skip-forward-item ${super.buildCSSClass()}`;
       }
 
       handleClick() {
-        const now = this.player_.currentTime();
-        this.player_.currentTime(now + 2);
-        console.log("clicked button", now);
+        this.player.pause();
+        const now = this.player.currentTime();
+        const frameTime = 1 / this.options.fps;
+        this.player.currentTime(now + frameTime);
+        console.log("clicked button", frameTime);
       }
     }
     class SkipBackwardButton extends VjsButton {
       constructor(player, options) {
         super(player, options);
         this.controlText("Next");
+        this.options = options;
+        this.player = player;
       }
 
       buildCSSClass() {
         return `vjs-skip-backward-item ${super.buildCSSClass()}`;
       }
       handleClick() {
-        const now = this.player_.currentTime();
-        this.player_.currentTime(now - 0.5);
-        console.log(now);
+        const now = this.player.currentTime();
+        const frameTime = 1 / this.options.fps;
+        this.player.currentTime(now - frameTime);
+        console.log("clicked button", frameTime);
       }
     }
 
