@@ -41,7 +41,7 @@ export default {
           controlBar: {
             children: {
               SkipBackwardButton: { fps: 25 },
-              playToggle: true,
+              playToggle: false,
               SkipForwardButton: { fps: 25 },
               CurrentTimeDisplay: true,
               ProgressControl: { liveui: true },
@@ -163,11 +163,12 @@ export default {
         return `vjs-first-tool-button`;
       }
       handleClick() {
+        this.player.controlBar.SkipBackwardButton.hide();
         console.log("first tool clicked!!");
       }
     }
 
-    //=============== components ==============
+    //=============== components =====================
     let BaseComponent = videojs.getComponent("Component");
 
     //--------------- title Bar -----------------------
@@ -206,16 +207,32 @@ export default {
       }
     }
 
-    //------- Regestring componenets------------
+    //================= Clickable Components ==============
+    let ClickableComponent = videojs.getComponent("ClickableComponent");
+
+    //-------------- tool parent as clicakble components
+    class ToolsParentClickableComp extends ClickableComponent {
+      constructor(player, options) {
+        super(player, options);
+      }
+    }
+
+    //============= Regestring componenets ==========
+    //---- extend component
     videojs.registerComponent("TitleBar", TitleBar);
     videojs.registerComponent("ToolsParent", ToolsParent);
-
+    //---- extend button
     videojs.registerComponent("SkipForwardButton", SkipForwardButton);
     videojs.registerComponent("SkipBackwardButton", SkipBackwardButton);
     videojs.registerComponent("ToolsParentButton", ToolsParentButton);
     videojs.registerComponent("FirstToolButton", FirstToolButton);
+    //------ extend clickable component
+    videojs.registerComponent(
+      "ToolsParentClickableComp",
+      ToolsParentClickableComp
+    );
 
-    //------ player
+    //========= player ============
     this.player = videojs(
       this.$refs.videoPlayer,
       this.options,
