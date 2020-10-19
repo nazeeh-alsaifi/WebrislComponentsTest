@@ -14,6 +14,10 @@
         change source
       </button>
     </div>
+    <div class="container">
+      <h4>currentTime: {{ playerCurrentTime }}</h4>
+      <h4>duration: {{ playerDuration }}</h4>
+    </div>
   </div>
 </template>
 
@@ -30,7 +34,10 @@ export default {
         return {
           autoplay: false,
           controls: true,
-          TitleBar: { text: {} },
+          // TitleBar: { text: {} },
+          ToolsParent: true,
+          ToolsParentButton: true,
+          FirstToolButton: true,
           controlBar: {
             children: {
               SkipBackwardButton: { fps: 25 },
@@ -58,7 +65,21 @@ export default {
       // },
     };
   },
-  computed: { ...mapGetters(["getSources", "getCurrentSource"]) },
+  computed: {
+    ...mapGetters(["getSources", "getCurrentSource"]),
+    playerCurrentTime: function () {
+      if (this.player !== null) {
+        return this.player.currentTime();
+      }
+      return 0;
+    },
+    playerDuration: function () {
+      if (this.player !== null) {
+        return this.player.duration();
+      }
+      return 0;
+    },
+  },
   methods: {
     ...mapActions(["changeSource"]),
     loadSource() {
@@ -74,8 +95,10 @@ export default {
     },
   },
   mounted() {
-    //--------------- skip forward button -----------------------
+    //==================== BUTTONS =============
     let VjsButton = videojs.getComponent("Button");
+
+    //--------------- skip forward button -----------------------
     class SkipForwardButton extends VjsButton {
       constructor(player, options) {
         super(player, options);
@@ -113,10 +136,42 @@ export default {
         console.log("clicked button", frameTime);
       }
     }
+    class ToolsParentButton extends VjsButton {
+      constructor(player, options) {
+        super(player, options);
+        this.controlText("Tools Parent Button");
+        this.player = player;
+        this.options = options;
+        // videojs.dom.emptyEl(this.el());
+      }
+      buildCSSClass() {
+        return `vjs-tools-parent-button`;
+      }
+      handleClick() {
+        console.log("tools parent clicked!!");
+      }
+    }
+    class FirstToolButton extends VjsButton {
+      constructor(player, options) {
+        super(player, options);
+        this.controlText("First Tool Button");
+        this.player = player;
+        this.options = options;
+        // videojs.dom.emptyEl(this.el());
+      }
+      buildCSSClass() {
+        return `vjs-first-tool-button`;
+      }
+      handleClick() {
+        console.log("first tool clicked!!");
+      }
+    }
+
+    //=============== components ==============
+    let BaseComponent = videojs.getComponent("Component");
 
     //--------------- title Bar -----------------------
     // Changing title bar to ES6 and remove deprecate
-    let BaseComponent = videojs.getComponent("Component");
     class TitleBar extends BaseComponent {
       constructor(player, options) {
         super(player, options);
@@ -137,11 +192,28 @@ export default {
         videojs.dom.appendContent(this.el(), text);
       }
     }
+    //--------------- tools parent -----------------------
+    // Changing title bar to ES6 and remove deprecate
+    class ToolsParent extends BaseComponent {
+      constructor(player, options) {
+        super(player, options);
+        // this.addChild("<span>test</span>");
+      }
+      createEl() {
+        return videojs.dom.createEl("div", {
+          className: "vjs-tools-parent",
+        });
+      }
+    }
 
     //------- Regestring componenets------------
     videojs.registerComponent("TitleBar", TitleBar);
+    videojs.registerComponent("ToolsParent", ToolsParent);
+
     videojs.registerComponent("SkipForwardButton", SkipForwardButton);
     videojs.registerComponent("SkipBackwardButton", SkipBackwardButton);
+    videojs.registerComponent("ToolsParentButton", ToolsParentButton);
+    videojs.registerComponent("FirstToolButton", FirstToolButton);
 
     //------ player
     this.player = videojs(
@@ -194,6 +266,58 @@ export default {
 .video-js.vjs-paused.vjs-has-started .vjs-title-bar,
 .video-js.vjs-user-active.vjs-has-started .vjs-title-bar {
   display: block;
+}
+
+.vjs-tools-parent {
+  height: 25px;
+  width: 25px;
+  background-color: #bbb;
+  border-radius: 50%;
+  display: inline-block;
+  transform: (-50px, -50px);
+}
+.video-js .vjs-tools-parent-button {
+  font-size: 3em;
+  line-height: 1.5em;
+  height: 2em;
+  width: 2em;
+  display: block;
+  position: absolute;
+  top: 10px;
+  left: 90%;
+  padding: 0;
+  cursor: pointer;
+  opacity: 1;
+  border: 0.06666em solid #fff;
+  background-color: #2b333f;
+  background-color: rgba(43, 51, 63, 0.7);
+  border-radius: 50%;
+  transition: all 0.4s;
+}
+.video-js .vjs-tools-parent-button .vjs-icon-placeholder:before {
+  font-family: "VideoJs";
+  content: "\f110";
+}
+.video-js .vjs-first-tool-button {
+  font-size: 3em;
+  line-height: 1.5em;
+  height: 2em;
+  width: 2em;
+  display: block;
+  position: absolute;
+  top: 10px;
+  left: 83%;
+  padding: 0;
+  cursor: pointer;
+  opacity: 1;
+  border: 0.06666em solid #fff;
+  background-color: #2b333f;
+  background-color: rgba(136, 183, 255, 0.986);
+  border-radius: 50%;
+  transition: all 0.4s;
+}
+.video-js .vjs-first-tool-button .vjs-icon-placeholder:before {
+  font-family: "VideoJs";
 }
 </style>
 
