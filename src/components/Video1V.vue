@@ -174,7 +174,7 @@ export default {
       handleClick(e) {
         e.preventDefault();
         e.stopPropagation();
-        this.player.controlBar.SkipBackwardButton.hide();
+        // this.player.controlBar.SkipBackwardButton.hide();
         console.log("first tool clicked!!");
       }
     }
@@ -192,7 +192,7 @@ export default {
       handleClick(e) {
         e.preventDefault();
         e.stopPropagation();
-        this.player.controlBar.SkipBackwardButton.hide();
+        // this.player.controlBar.SkipBackwardButton.hide();
         console.log("second tool clicked!!");
       }
     }
