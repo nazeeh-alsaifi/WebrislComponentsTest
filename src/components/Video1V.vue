@@ -1,6 +1,6 @@
 <template>
   <div class="container mb-5 mt-5">
-    <div id="video_player">
+    <div id="video_player" class="interactive-player">
       <video
         ref="videoPlayer"
         class="video-js vjs-fluid vjs-default-skin vjs-big-play-centered mb-2"
@@ -35,15 +35,28 @@ export default {
           autoplay: false,
           controls: true,
           // TitleBar: { text: {} },
-          ToolsParent: true,
+          // ToolsParent: true,
           // ToolsParentButton: true,
           // FirstToolButton: true,
-          ToolsParentClickableComp: {
+          ToolsWrapper: {
+            children: {
+              ToolsParentButton: true,
+              ToolsToggler: {
+                children: {
+                  FirstToolButton: true,
+                  SecondToolButton: true,
+                },
+              },
+            },
+          },
+          /*
+           ToolsParentClickableComp: {
             children: {
               FirstToolButton: true,
               SecondToolButton: true,
             },
-          },
+          }, 
+          */
           controlBar: {
             children: {
               SkipBackwardButton: { fps: 25 },
@@ -142,24 +155,31 @@ export default {
         console.log("clicked button", frameTime);
       }
     }
-    // TODO : DELETE
-    /* 
+    // TODO : on hold DElETE ToolsParentButton
     class ToolsParentButton extends VjsButton {
       constructor(player, options) {
         super(player, options);
         this.controlText("Tools Parent Button");
         this.player = player;
         this.options = options;
+        this.hidden = false;
         // videojs.dom.emptyEl(this.el());
       }
       buildCSSClass() {
         return `vjs-tools-parent-button`;
       }
       handleClick() {
+        if (!this.hidden) {
+          this.player.ToolsWrapper.ToolsToggler.hide();
+          this.hidden = true;
+        } else {
+          this.player.ToolsWrapper.ToolsToggler.show();
+          this.hidden = false;
+        }
         console.log("tools parent clicked!!");
       }
     }
-     */
+
     class FirstToolButton extends VjsButton {
       constructor(player, options) {
         super(player, options);
@@ -222,6 +242,26 @@ export default {
         videojs.dom.appendContent(this.el(), text);
       }
     }
+    class ToolsWrapper extends BaseComponent {
+      constructor(player, options) {
+        super(player, options);
+      }
+      createEl() {
+        return videojs.dom.createEl("div", {
+          className: "vjs-tools-wrapper",
+        });
+      }
+    }
+    class ToolsToggler extends BaseComponent {
+      constructor(player, options) {
+        super(player, options);
+      }
+      createEl() {
+        return videojs.dom.createEl("div", {
+          className: "vjs-tools-toggler",
+        });
+      }
+    }
     //---------------TODO:delete:tools parent -----------------------
     // class ToolsParent extends BaseComponent {
     //   constructor(player, options) {
@@ -245,7 +285,7 @@ export default {
         this.hidden = false;
       }
       buildCSSClass() {
-        return `vjs-tools-parent-button`;
+        return `vjs-tools-parent-clickable-comp`;
       }
       createEl() {
         return super.createEl();
@@ -281,13 +321,15 @@ export default {
     //============= Regestring componenets ==========
     //---- extend component
     videojs.registerComponent("TitleBar", TitleBar);
+    videojs.registerComponent("ToolsWrapper", ToolsWrapper);
+    videojs.registerComponent("ToolsToggler", ToolsToggler);
     // TODO:delete toolsparent
     // videojs.registerComponent("ToolsParent", ToolsParent);
     //---- extend button
     videojs.registerComponent("SkipForwardButton", SkipForwardButton);
     videojs.registerComponent("SkipBackwardButton", SkipBackwardButton);
-    // TODO:delete tools paert button
-    // videojs.registerComponent("ToolsParentButton", ToolsParentButton);
+    // TODO:ONHOLD:delete tools paert button
+    videojs.registerComponent("ToolsParentButton", ToolsParentButton);
     videojs.registerComponent("FirstToolButton", FirstToolButton);
     videojs.registerComponent("SecondToolButton", SecondToolButton);
 
@@ -350,15 +392,17 @@ export default {
   display: block;
 }
 
-.vjs-tools-parent {
+/* .vjs-tools-parent {
   height: 25px;
   width: 25px;
   background-color: #bbb;
   border-radius: 50%;
   display: inline-block;
   transform: (-50px, -50px);
-}
-.video-js .vjs-tools-parent-button {
+} */
+/* 
+
+.video-js .vjs-tools-parent-clickable-comp {
   font-size: 3em;
   line-height: 1.5em;
   height: 2em;
@@ -375,21 +419,18 @@ export default {
   background-color: rgba(43, 51, 63, 0.7);
   border-radius: 50%;
   transition: all 0.4s;
-  /* margin: 1% 0%; */
 }
-.video-js .vjs-tools-parent-button > .vjs-icon-placeholder:before {
+.video-js .vjs-tools-parent-clickable-comp > .vjs-icon-placeholder:before {
   font-family: "VideoJs";
   content: "\f110";
 }
 .video-js .vjs-first-tool-button {
-  /* font-size: 3em; */
   line-height: 1.5em;
   height: 2em;
   width: 2em;
   display: block;
   position: absolute;
   top: 110%;
-  /* left: 83%; */
   padding: 0;
   cursor: pointer;
   opacity: 1;
@@ -403,17 +444,13 @@ export default {
   font-family: "VideoJs";
   content: "\f111";
 }
-
 .video-js .vjs-second-tool-button {
-  /* font-size: 3em; */
   line-height: 1.5em;
   height: 2em;
   width: 2em;
   display: block;
   position: absolute;
   top: 220%;
-  /* bottom: %; */
-  /* left: 83%; */
   padding: 0;
   cursor: pointer;
   opacity: 1;
@@ -423,9 +460,96 @@ export default {
   border-radius: 50%;
   transition: all 0.4s;
 }
+ 
 .video-js .vjs-second-tool-button > .vjs-icon-placeholder:before {
   font-family: "VideoJs";
   content: "\f112";
+}
+*/
+.interactive-player *,
+.interactive-player ::before,
+.interactive-player ::after {
+  box-sizing: border-box;
+  border-width: 0;
+  border-style: solid;
+  border-color: #e2e8f0;
+}
+.video-js .vjs-tools-wrapper {
+  right: 0;
+  top: 0;
+  position: absolute;
+  margin: 16px;
+  display: flex;
+  flex-direction: row-reverse;
+}
+.video-js .vjs-tools-wrapper .vjs-tools-parent-button {
+  z-index: 30;
+  width: 48px;
+  position: relative;
+  margin-left: 8px;
+  height: 48px;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  border-width: 2px;
+  border-radius: 9999px;
+  background-color: #2c3e50;
+  border-style: solid;
+  border-color: white;
+}
+
+.video-js
+  .vjs-tools-wrapper
+  .vjs-tools-parent-button
+  .vjs-icon-placeholder:before {
+  font-family: "VideoJs";
+  content: "\f110";
+  color: white;
+  font-size: 2em;
+  font-weight: 500;
+}
+
+.video-js .vjs-tools-wrapper .vjs-tools-toggler {
+  flex-direction: row-reverse;
+  display: flex;
+}
+
+.video-js .vjs-tools-wrapper .vjs-tools-toggler > * {
+  z-index: 30;
+  width: 48px;
+  position: relative;
+  margin-left: 8px;
+  height: 48px;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  border-width: 2px;
+  border-radius: 9999px;
+  background-color: #2c3e50;
+  border-style: solid;
+  border-color: white;
+}
+.video-js
+  .vjs-tools-wrapper
+  .vjs-tools-toggler
+  .vjs-first-tool-button
+  .vjs-icon-placeholder:before {
+  font-family: "VideoJs";
+  content: "\f111";
+  color: white;
+  font-size: 2em;
+  font-weight: 500;
+}
+.video-js
+  .vjs-tools-wrapper
+  .vjs-tools-toggler
+  .vjs-second-tool-button
+  .vjs-icon-placeholder:before {
+  font-family: "VideoJs";
+  content: "\f112";
+  color: white;
+  font-size: 2em;
+  font-weight: 500;
 }
 </style>
 
