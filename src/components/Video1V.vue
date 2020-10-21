@@ -162,7 +162,7 @@ export default {
         this.controlText("Tools Parent Button");
         this.player = player;
         this.options = options;
-        this.hidden = false;
+        this.hidden = true;
         // videojs.dom.emptyEl(this.el());
       }
       buildCSSClass() {
@@ -255,6 +255,7 @@ export default {
     class ToolsToggler extends BaseComponent {
       constructor(player, options) {
         super(player, options);
+        this.hide();
       }
       createEl() {
         return videojs.dom.createEl("div", {
