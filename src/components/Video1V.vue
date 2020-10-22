@@ -17,6 +17,8 @@
     <div class="container">
       <h4>currentTime: {{ playerCurrentTime }}</h4>
       <h4>duration: {{ playerDuration }}</h4>
+      <!-- <h4>frame: {{ frameNum }}</h4> -->
+      <h4>frame: {{ playerFrame }}</h4>
     </div>
   </div>
 </template>
@@ -82,19 +84,26 @@ export default {
       //   type: "video/mp4",
       //   dataSetup: "{}",
       // },
+      // frameNum: -1,
     };
   },
   computed: {
     ...mapGetters(["getSources", "getCurrentSource"]),
     playerCurrentTime: function () {
       if (this.player !== null) {
-        return this.player.currentTime();
+        return +this.player.currentTime();
       }
       return 0;
     },
     playerDuration: function () {
       if (this.player !== null) {
         return this.player.duration();
+      }
+      return 0;
+    },
+    playerFrame: function () {
+      if (this.player !== null) {
+        return Math.floor(this.player.currentTime() * 25);
       }
       return 0;
     },
@@ -112,6 +121,15 @@ export default {
       const now = this.player.currentTime();
       console.log(now);
     },
+    // roundToTwo(num) {
+    //   return Math.round((num + Number.EPSILON) * 100) / 100;
+    // },
+    // roundToFour(num) {
+    //   return Math.round((num + Number.EPSILON) * 10000) / 10000;
+    // },
+    // increment() {
+    //   this.frameNum += 1;
+    // },
   },
   mounted() {
     //==================== BUTTONS =============
@@ -132,9 +150,31 @@ export default {
       handleClick() {
         this.player.pause();
         const now = this.player.currentTime();
+        // const indicator = +(now % 0.04).toFixed(6);
+        const indicator = this.floatSafeRemainder(now, 0.04);
         const frameTime = 1 / this.options.fps;
-        this.player.currentTime(now + frameTime);
+
+        console.log("indicator", indicator);
+        if (indicator != 0) {
+          const sub = +(now - indicator).toFixed(2);
+          const increment = +(sub + frameTime).toFixed(6);
+          this.player.currentTime(increment);
+
+          console.log("sub", now - indicator);
+        } else {
+          const increment = +(now + frameTime).toFixed(6);
+          this.player.currentTime(increment);
+        }
         console.log("clicked button", frameTime);
+      }
+
+      floatSafeRemainder(val, step) {
+        var valDecCount = (val.toString().split(".")[1] || "").length;
+        var stepDecCount = (step.toString().split(".")[1] || "").length;
+        var decCount = valDecCount > stepDecCount ? valDecCount : stepDecCount;
+        var valInt = parseInt(val.toFixed(decCount).replace(".", ""));
+        var stepInt = parseInt(step.toFixed(decCount).replace(".", ""));
+        return (valInt % stepInt) / Math.pow(10, decCount);
       }
     }
     class SkipBackwardButton extends VjsButton {
@@ -149,10 +189,30 @@ export default {
         return `vjs-skip-backward-item ${super.buildCSSClass()}`;
       }
       handleClick() {
+        this.player.pause();
         const now = this.player.currentTime();
+        const indicator = this.floatSafeRemainder(now, 0.04);
         const frameTime = 1 / this.options.fps;
-        this.player.currentTime(now - frameTime);
+        if (indicator != 0) {
+          const sub = +(now - indicator).toFixed(2);
+          const decrement = sub;
+          this.player.currentTime(decrement);
+
+          console.log("sub", now - indicator);
+        } else {
+          const decrement = (now - frameTime).toFixed(6);
+          this.player.currentTime(decrement);
+        }
+
         console.log("clicked button", frameTime);
+      }
+      floatSafeRemainder(val, step) {
+        var valDecCount = (val.toString().split(".")[1] || "").length;
+        var stepDecCount = (step.toString().split(".")[1] || "").length;
+        var decCount = valDecCount > stepDecCount ? valDecCount : stepDecCount;
+        var valInt = parseInt(val.toFixed(decCount).replace(".", ""));
+        var stepInt = parseInt(step.toFixed(decCount).replace(".", ""));
+        return (valInt % stepInt) / Math.pow(10, decCount);
       }
     }
     // TODO : on hold DElETE ToolsParentButton
