@@ -1,10 +1,9 @@
 import videojs from "video.js";
 
-//==================== BUTTONS =============
 let VjsButton = videojs.getComponent("Button");
 let BaseComponent = videojs.getComponent("Component");
 
-// TODO : on hold DElETE ToolsParentButton
+//==================== BUTTONS =============
 class ToolsParentButton extends VjsButton {
   constructor(player, options) {
     super(player, options);
@@ -65,6 +64,26 @@ class SecondToolButton extends VjsButton {
     console.log("second tool clicked!!");
   }
 }
+class TimerButton extends VjsButton {
+  constructor(player, options) {
+    super(player, options);
+    this.controlText("add stop watch");
+    this.player = player;
+    this.options = options;
+    // videojs.dom.emptyEl(this.el());
+  }
+  buildCSSClass() {
+    return `vjs-timer-tool-button`;
+  }
+  handleClick(e) {
+    e.preventDefault();
+    e.stopPropagation();
+    // this.player.controlBar.SkipBackwardButton.hide();
+    console.log("timer added!!");
+  }
+}
+
+//======================= COMPONENTS ===============
 class ToolsWrapper extends BaseComponent {
   constructor(player, options) {
     super(player, options);
@@ -90,6 +109,7 @@ export {
   ToolsParentButton,
   FirstToolButton,
   SecondToolButton,
+  TimerButton,
   ToolsWrapper,
   ToolsToggler,
 };
