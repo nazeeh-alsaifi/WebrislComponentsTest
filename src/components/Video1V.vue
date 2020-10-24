@@ -31,6 +31,7 @@ import {
   SecondToolButton,
   ToolsWrapper,
   ToolsToggler,
+  TimerButton,
 } from "@/player_components/toolsComponents.js";
 import {
   SkipForwardButton,
@@ -54,6 +55,7 @@ export default {
                 children: {
                   FirstToolButton: true,
                   SecondToolButton: true,
+                  TimerButton: true,
                 },
               },
             },
@@ -132,6 +134,7 @@ export default {
     videojs.registerComponent("ToolsParentButton", ToolsParentButton);
     videojs.registerComponent("FirstToolButton", FirstToolButton);
     videojs.registerComponent("SecondToolButton", SecondToolButton);
+    videojs.registerComponent("TimerButton", TimerButton);
 
     //------ extend clickable component
 
@@ -161,31 +164,9 @@ export default {
   content: "\f120";
   font-family: "VideoJs";
 }
-
-.video-js .vjs-title-bar {
-  background: rgba(0, 0, 0, 0.5);
-  color: white;
-
-  /*
-    By default, do not show the title bar.
-  */
-  display: none;
-  font-size: 2em;
-  padding: 0.5em;
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-}
-
-/* 
-  Only show the title bar after playback has begun (so as not to hide
-  the big play button) and only when paused or when the user is 
-  interacting with the player.
-*/
-.video-js.vjs-paused.vjs-has-started .vjs-title-bar,
-.video-js.vjs-user-active.vjs-has-started .vjs-title-bar {
-  display: block;
+.video-js .vjs-current-time,
+.vjs-no-flex .vjs-current-time {
+  display: block !important;
 }
 
 .interactive-player *,
@@ -196,6 +177,8 @@ export default {
   border-style: solid;
   border-color: #e2e8f0;
 }
+
+/* ========= tools components styling ========== */
 .video-js .vjs-tools-wrapper {
   right: 0;
   top: 0;
@@ -273,9 +256,7 @@ export default {
   font-size: 2em;
   font-weight: 500;
 }
-.video-js .vjs-current-time,
-.vjs-no-flex .vjs-current-time {
-  display: block !important;
-}
+
+/* ======== timer component styling ========= */
 </style>
 
