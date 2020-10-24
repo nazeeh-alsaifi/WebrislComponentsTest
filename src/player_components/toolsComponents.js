@@ -70,6 +70,7 @@ class TimerButton extends VjsButton {
     this.controlText("add stop watch");
     this.player = player;
     this.options = options;
+    this.hidden = true;
     // videojs.dom.emptyEl(this.el());
   }
   buildCSSClass() {
@@ -79,6 +80,13 @@ class TimerButton extends VjsButton {
     e.preventDefault();
     e.stopPropagation();
     // this.player.controlBar.SkipBackwardButton.hide();
+    if (!this.hidden) {
+      this.player.TimerMoveable.hide();
+      this.hidden = true;
+    } else {
+      this.player.TimerMoveable.show();
+      this.hidden = false;
+    }
     console.log("timer added!!");
   }
 }

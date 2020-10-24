@@ -37,6 +37,7 @@ import {
   SkipForwardButton,
   SkipBackwardButton,
 } from "@/player_components/skipComponents.js";
+import { TimerMoveable } from "@/player_components/timerComponent.js";
 import { mapActions, mapGetters } from "vuex";
 
 export default {
@@ -60,6 +61,7 @@ export default {
               },
             },
           },
+          TimerMoveable: true,
           controlBar: {
             children: {
               SkipBackwardButton: { fps: 25 },
@@ -128,6 +130,8 @@ export default {
     //---- extend component
     videojs.registerComponent("ToolsWrapper", ToolsWrapper);
     videojs.registerComponent("ToolsToggler", ToolsToggler);
+    videojs.registerComponent("TimerMoveable", TimerMoveable);
+
     //---- extend button
     videojs.registerComponent("SkipForwardButton", SkipForwardButton);
     videojs.registerComponent("SkipBackwardButton", SkipBackwardButton);
@@ -258,5 +262,20 @@ export default {
 }
 
 /* ======== timer component styling ========= */
+.video-js .vjs-timer-moveable {
+  /* transform: translate(-25%, -25%); */
+  left: 50%;
+  top: 50%;
+  z-index: 29;
+  position: absolute;
+  cursor: move;
+  border-width: 2px;
+  border-radius: 4px;
+  --border-opacity: 1;
+  /* border-color: rgba(255, 255, 255, var(--border-opacity)); */
+  background-color: rgba(0, 0, 0, 0.65);
+  width: 50px;
+  height: 50px;
+}
 </style>
 
