@@ -1,8 +1,7 @@
 import videojs from "video.js";
-
-//==================== BUTTONS =============
 let VjsButton = videojs.getComponent("Button");
 
+//==================== BUTTONS =============
 //--------------- skip forward button -----------------------
 class SkipForwardButton extends VjsButton {
   constructor(player, options) {
