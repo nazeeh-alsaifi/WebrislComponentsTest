@@ -21,7 +21,7 @@ class TimerMoveable extends BaseComponent {
     // );
     //===========ENABLE ================
     // this.on("mousedown", this.dragMouseDown);
-    this.on(["mousedown", "touchstart"], this.dragMouseDown);
+    this.on(this.el_.ownerDocument, "mousedown", this.dragMouseDown);
     // this.el_.onmousedown = this.dragMouseDown;
     this.dragItem = this.el_;
     console.log("drageItem", this.dragItem);
@@ -48,9 +48,9 @@ class TimerMoveable extends BaseComponent {
     // get the mouse cursor position at startup:
     this.pos3 = e.clientX;
     this.pos4 = e.clientY;
-    this.on("mouseup", this.closeDragElement);
+    this.on(this.el_.ownerDocument, "mouseup", this.closeDragElement);
     // call a function whenever the cursor moves:
-    this.on("mousemove", this.elementDrag);
+    this.on(this.el_.ownerDocument, "mousemove", this.elementDrag);
   }
 
   elementDrag(e) {
@@ -71,8 +71,8 @@ class TimerMoveable extends BaseComponent {
   closeDragElement(e) {
     // stop moving when mouse button is released:
     console.log("closeDragElement", e);
-    this.off("mouseup", this.closeDragElement);
-    this.off("mousemove", this.elementDrag);
+    this.off(this.el_.ownerDocument, "mouseup", this.closeDragElement);
+    this.off(this.el_.ownerDocument, "mousemove", this.elementDrag);
   }
 }
 
