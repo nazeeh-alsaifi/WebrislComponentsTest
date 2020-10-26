@@ -1,5 +1,5 @@
 <template>
-  <div class="container mb-5 mt-5">
+  <div id="video_container" class="container mb-5 mt-5">
     <div id="video_player" class="interactive-player">
       <video
         ref="videoPlayer"
