@@ -1,10 +1,13 @@
 import videojs from "video.js";
+// import formatTime from "@/player_components/utils/format-time.js";
+// import document from "global/document";
+
 // import { bind } from "./utils/fn";
 // import { bind, throttle, UPDATE_REFRESH_INTERVAL } from "video.js/core.js";
 // import * as core from "video.js/core.js";
 // let VjsButton = videojs.getComponent("Button");
 let BaseComponent = videojs.getComponent("Component");
-
+let TimeDisplay = videojs.getComponent("TimeDisplay");
 //==================== BUTTONS =============
 
 //======================= COMPONENTS ===============
@@ -123,6 +126,41 @@ class TimerMoveable extends BaseComponent {
   //====================js fiddle
 }
 
-// class TimerDetails extends BaseComponent {}
+class TimerDetailsWrapper extends BaseComponent {
+  constructor(player, options) {
+    super(player, options);
 
-export { TimerMoveable };
+    // this.updateTextNode_();
+  }
+
+  createEl() {
+    return videojs.dom.createEl("div", {
+      className: "p-flex p-items-center",
+    });
+  }
+}
+class MyTimeDisplay extends TimeDisplay {
+  constructor(player, options) {
+    super(player, options);
+    this.on(player, "durationchange", this.updateContent);
+  }
+  updateContent() {
+    if (typeof this.player_.duration() !== "number") {
+      return;
+    }
+
+    let time;
+
+    // @deprecated We should only use remainingTimeDisplay
+    // as of video.js 7
+    if (this.player_.currentTime) {
+      time = this.player_.currentTime();
+    } else {
+      time = this.player_.currentTime();
+    }
+
+    this.updateTextNode_(time);
+  }
+}
+
+export { TimerMoveable, TimerDetailsWrapper, MyTimeDisplay };

@@ -37,7 +37,11 @@ import {
   SkipForwardButton,
   SkipBackwardButton,
 } from "@/player_components/skipComponents.js";
-import { TimerMoveable } from "@/player_components/timerComponent.js";
+import {
+  TimerMoveable,
+  TimerDetailsWrapper,
+  MyTimeDisplay,
+} from "@/player_components/timerComponent.js";
 import { mapActions, mapGetters } from "vuex";
 
 export default {
@@ -61,7 +65,15 @@ export default {
               },
             },
           },
-          TimerMoveable: true,
+          TimerMoveable: {
+            children: {
+              TimerDetailsWrapper: {
+                children: {
+                  MyTimeDisplay: true,
+                },
+              },
+            },
+          },
           controlBar: {
             children: {
               SkipBackwardButton: { fps: 25 },
@@ -131,6 +143,8 @@ export default {
     videojs.registerComponent("ToolsWrapper", ToolsWrapper);
     videojs.registerComponent("ToolsToggler", ToolsToggler);
     videojs.registerComponent("TimerMoveable", TimerMoveable);
+    videojs.registerComponent("TimerDetailsWrapper", TimerDetailsWrapper);
+    videojs.registerComponent("MyTimeDisplay", MyTimeDisplay);
 
     //---- extend button
     videojs.registerComponent("SkipForwardButton", SkipForwardButton);
@@ -276,6 +290,14 @@ export default {
   background-color: rgba(0, 0, 0, 0.65);
   width: 50px;
   height: 50px;
+}
+
+/* ================ NEW CONVENTION STYLING ==============*/
+.interactive-player .p-items-center {
+  align-items: center;
+}
+.interactive-player .p-flex {
+  display: flex;
 }
 </style>
 
