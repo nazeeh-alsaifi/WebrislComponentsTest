@@ -1,4 +1,5 @@
 import videojs from "video.js";
+import NewTimeDisplay from "./utils/time-display.js";
 // import formatTime from "@/player_components/utils/format-time.js";
 // import document from "global/document";
 
@@ -7,7 +8,9 @@ import videojs from "video.js";
 // import * as core from "video.js/core.js";
 // let VjsButton = videojs.getComponent("Button");
 let BaseComponent = videojs.getComponent("Component");
-let TimeDisplay = videojs.getComponent("TimeDisplay");
+// let TimeDisplay = videojs.getComponent("TimeDisplay");
+// let NewTimeDisplay = videojs.getComponent("NewTimeDisplay");
+
 //==================== BUTTONS =============
 
 //======================= COMPONENTS ===============
@@ -22,7 +25,7 @@ class TimerMoveable extends BaseComponent {
     // );
     // console.log("dom", videojs.dom);
     // console.log("fn", videojs);
-    this.parent = this.parentComponent_;
+    // this.parent = this.parentComponent_;
     // );
     //===========ENABLE ================
     // this.on("mousedown", this.dragMouseDown);
@@ -30,10 +33,10 @@ class TimerMoveable extends BaseComponent {
     this.on(ownerDoc, "mousedown", this.dragMouseDown);
     // this.el_.onmousedown = this.dragMouseDown;
     // this.dragItem = this.el_;
-    console.log("ownerDoc", ownerDoc);
-    console.log("this.el_", this.el_.offsetLeft);
+    // console.log("ownerDoc", ownerDoc);
+    // console.log("this.el_", this.el_.offsetLeft);
 
-    console.log("this.parent", this.parentComponent_);
+    // console.log("this.parent", this.parentComponent_);
     // console.log("videojs", videojs.throttle);
 
     // const testRect = getBoundingClientRect(this.el_);
@@ -139,11 +142,56 @@ class TimerDetailsWrapper extends BaseComponent {
     });
   }
 }
-class MyTimeDisplay extends TimeDisplay {
+class TimerVideoDetails extends BaseComponent {
+  constructor(player, options) {
+    super(player, options);
+
+    // this.updateTextNode_();
+  }
+
+  createEl() {
+    return videojs.dom.createEl("div", {
+      className: "p-p-2",
+    });
+  }
+}
+class MyTimeDisplay extends NewTimeDisplay {
   constructor(player, options) {
     super(player, options);
     this.on(player, "durationchange", this.updateContent);
   }
+  // createEl() {
+  // const className = this.buildCSSClass();
+  // const el = super.createEl("p", {
+  //   className: `${className} vjs-time-control vjs-control`,
+  //   innerHTML: `<span class="vjs-control-text" role="presentation">${this.localize(
+  //     this.labelText_
+  //   )}\u00a0</span>`,
+  // });
+
+  // this.contentEl_ = videojs.dom.createEl(
+  //   "p",
+  //   {
+  //     className: `${className}-display`,
+  //   },
+  //   {
+  //     // tell screen readers not to automatically read the time as it changes
+  //     "aria-live": "off",
+  //     // span elements have no implicit role, but some screen readers (notably VoiceOver)
+  //     // treat them as a break between items in the DOM when using arrow keys
+  //     // (or left-to-right swipes on iOS) to read contents of a page. Using
+  //     // role='presentation' causes VoiceOver to NOT treat this span as a break.
+  //     role: "presentation",
+  //   }
+  // );
+
+  // el.appendChild(this.contentEl_);
+
+  //--------------------
+  //   const el = videojs.dom.createEl("p")
+  //   return el;
+  // }
+
   updateContent() {
     if (typeof this.player_.duration() !== "number") {
       return;
@@ -163,4 +211,4 @@ class MyTimeDisplay extends TimeDisplay {
   }
 }
 
-export { TimerMoveable, TimerDetailsWrapper, MyTimeDisplay };
+export { TimerMoveable, TimerDetailsWrapper, MyTimeDisplay, TimerVideoDetails };

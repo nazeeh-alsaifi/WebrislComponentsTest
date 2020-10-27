@@ -41,6 +41,7 @@ import {
   TimerMoveable,
   TimerDetailsWrapper,
   MyTimeDisplay,
+  TimerVideoDetails,
 } from "@/player_components/timerComponent.js";
 import { mapActions, mapGetters } from "vuex";
 
@@ -69,7 +70,11 @@ export default {
             children: {
               TimerDetailsWrapper: {
                 children: {
-                  MyTimeDisplay: true,
+                  TimerVideoDetails: {
+                    children: {
+                      MyTimeDisplay: true,
+                    },
+                  },
                 },
               },
             },
@@ -144,6 +149,9 @@ export default {
     videojs.registerComponent("ToolsToggler", ToolsToggler);
     videojs.registerComponent("TimerMoveable", TimerMoveable);
     videojs.registerComponent("TimerDetailsWrapper", TimerDetailsWrapper);
+    videojs.registerComponent("TimerVideoDetails", TimerVideoDetails);
+
+    //------- extend NewTimeDisplay
     videojs.registerComponent("MyTimeDisplay", MyTimeDisplay);
 
     //---- extend button
@@ -288,8 +296,6 @@ export default {
   --border-opacity: 1;
   /* border-color: rgba(255, 255, 255, var(--border-opacity)); */
   background-color: rgba(0, 0, 0, 0.65);
-  width: 50px;
-  height: 50px;
 }
 
 /* ================ NEW CONVENTION STYLING ==============*/
@@ -298,6 +304,9 @@ export default {
 }
 .interactive-player .p-flex {
   display: flex;
+}
+.interactive-player .p-p-2 {
+  padding: 8px;
 }
 </style>
 
