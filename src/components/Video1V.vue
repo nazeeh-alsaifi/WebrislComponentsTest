@@ -42,6 +42,7 @@ import {
   TimerDetailsWrapper,
   MyTimeDisplay,
   TimerVideoDetails,
+  MyFrameDisplay,
 } from "@/player_components/timerComponent.js";
 import { mapActions, mapGetters } from "vuex";
 
@@ -73,6 +74,7 @@ export default {
                   TimerVideoDetails: {
                     children: {
                       MyTimeDisplay: true,
+                      MyFrameDisplay: { fps: 25 },
                     },
                   },
                 },
@@ -153,7 +155,7 @@ export default {
 
     //------- extend NewTimeDisplay
     videojs.registerComponent("MyTimeDisplay", MyTimeDisplay);
-
+    videojs.registerComponent("MyFrameDisplay", MyFrameDisplay);
     //---- extend button
     videojs.registerComponent("SkipForwardButton", SkipForwardButton);
     videojs.registerComponent("SkipBackwardButton", SkipBackwardButton);

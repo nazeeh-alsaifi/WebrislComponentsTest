@@ -1,6 +1,5 @@
 import videojs from "video.js";
-import NewTimeDisplay from "./utils/time-display.js";
-// import formatTime from "@/player_components/utils/format-time.js";
+import { NewTimeDisplay, NewFrameDisplay } from "./utils/time-display.js";
 // import document from "global/document";
 
 // import { bind } from "./utils/fn";
@@ -158,6 +157,7 @@ class TimerVideoDetails extends BaseComponent {
 class MyTimeDisplay extends NewTimeDisplay {
   constructor(player, options) {
     super(player, options);
+
     this.on(player, "durationchange", this.updateContent);
   }
   createEl() {
@@ -232,4 +232,59 @@ class MyTimeDisplay extends NewTimeDisplay {
   }
 }
 
-export { TimerMoveable, TimerDetailsWrapper, MyTimeDisplay, TimerVideoDetails };
+class MyFrameDisplay extends NewFrameDisplay {
+  constructor(player, options) {
+    super(player, options);
+    this.on(player, "durationchange", this.updateContent);
+  }
+  createEl() {
+    //--------------------
+    // const className = this.buildCSSClass();
+    const el = videojs.dom.createEl("p", {
+      className: `p-text-center p-whitespace-no-wrap`,
+    });
+    this.contentEl_ = videojs.dom.createEl(
+      "span",
+      {
+        className: `p-font-mono`,
+      },
+      {
+        // tell screen readers not to automatically read the time as it changes
+        "aria-live": "off",
+        // span elements have no implicit role, but some screen readers (notably VoiceOver)
+        // treat them as a break between items in the DOM when using arrow keys
+        // (or left-to-right swipes on iOS) to read contents of a page. Using
+        // role='presentation' causes VoiceOver to NOT treat this span as a break.
+        role: "presentation",
+      }
+    );
+    el.appendChild(this.contentEl_);
+    // el.innerHTML("s");
+    return el;
+  }
+
+  updateContent() {
+    if (typeof this.player_.duration() !== "number") {
+      return;
+    }
+
+    let time;
+
+    // @deprecated We should only use remainingTimeDisplay
+    // as of video.js 7
+    if (this.player_.currentTime) {
+      time = this.player_.currentTime() * this.options_.fps;
+    } else {
+      time = this.player_.currentTime() * this.options_.fps;
+    }
+
+    this.updateTextNode_(time);
+  }
+}
+export {
+  TimerMoveable,
+  TimerDetailsWrapper,
+  MyTimeDisplay,
+  TimerVideoDetails,
+  MyFrameDisplay,
+};

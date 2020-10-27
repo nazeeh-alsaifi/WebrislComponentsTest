@@ -47,14 +47,13 @@ const defaultImplementation = function(seconds, guide) {
   return h + m + s;
 };
 
-const interactivePlayerImplementation = function(seconds) {
+const interactivePlayerTime = function(seconds) {
   return seconds.toFixed(4);
 };
 
 // Internal pointer to the current implementation.
 let implementation = defaultImplementation;
-setFormatTime(interactivePlayerImplementation);
-
+setFormatTime(interactivePlayerTime);
 /**
  * Replaces the default formatTime implementation with a custom implementation.
  *
