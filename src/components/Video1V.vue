@@ -299,6 +299,7 @@ export default {
 }
 
 /* ================ NEW CONVENTION STYLING ==============*/
+
 .interactive-player .p-items-center {
   align-items: center;
 }
@@ -307,6 +308,17 @@ export default {
 }
 .interactive-player .p-p-2 {
   padding: 8px;
+}
+.interactive-player .p-whitespace-no-wrap {
+  font-size: 16px !important;
+  white-space: nowrap;
+}
+.interactive-player .p-text-center {
+  text-align: center;
+}
+.interactive-player .p-font-mono {
+  font-family: Menlo, Monaco, Consolas, "Liberation Mono", "Courier New",
+    monospace;
 }
 </style>
 

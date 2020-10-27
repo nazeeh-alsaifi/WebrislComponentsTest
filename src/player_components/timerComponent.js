@@ -160,37 +160,58 @@ class MyTimeDisplay extends NewTimeDisplay {
     super(player, options);
     this.on(player, "durationchange", this.updateContent);
   }
-  // createEl() {
-  // const className = this.buildCSSClass();
-  // const el = super.createEl("p", {
-  //   className: `${className} vjs-time-control vjs-control`,
-  //   innerHTML: `<span class="vjs-control-text" role="presentation">${this.localize(
-  //     this.labelText_
-  //   )}\u00a0</span>`,
-  // });
+  createEl() {
+    // const className = this.buildCSSClass();
+    // const el = super.createEl("p", {
+    //   className: `${className} vjs-time-control vjs-control`,
+    //   innerHTML: `<span class="vjs-control-text" role="presentation">${this.localize(
+    //     this.labelText_
+    //   )}\u00a0</span>`,
+    // });
 
-  // this.contentEl_ = videojs.dom.createEl(
-  //   "p",
-  //   {
-  //     className: `${className}-display`,
-  //   },
-  //   {
-  //     // tell screen readers not to automatically read the time as it changes
-  //     "aria-live": "off",
-  //     // span elements have no implicit role, but some screen readers (notably VoiceOver)
-  //     // treat them as a break between items in the DOM when using arrow keys
-  //     // (or left-to-right swipes on iOS) to read contents of a page. Using
-  //     // role='presentation' causes VoiceOver to NOT treat this span as a break.
-  //     role: "presentation",
-  //   }
-  // );
+    // this.contentEl_ = videojs.dom.createEl(
+    //   "p",
+    //   {
+    //     className: `${className}-display`,
+    //   },
+    //   {
+    //     // tell screen readers not to automatically read the time as it changes
+    //     "aria-live": "off",
+    //     // span elements have no implicit role, but some screen readers (notably VoiceOver)
+    //     // treat them as a break between items in the DOM when using arrow keys
+    //     // (or left-to-right swipes on iOS) to read contents of a page. Using
+    //     // role='presentation' causes VoiceOver to NOT treat this span as a break.
+    //     role: "presentation",
+    //   }
+    // );
 
-  // el.appendChild(this.contentEl_);
+    // el.appendChild(this.contentEl_);
 
-  //--------------------
-  //   const el = videojs.dom.createEl("p")
-  //   return el;
-  // }
+    //--------------------
+    // const className = this.buildCSSClass();
+    const el = videojs.dom.createEl("p", {
+      className: `p-text-center p-whitespace-no-wrap`,
+    });
+    this.contentEl_ = videojs.dom.createEl(
+      "span",
+      {
+        className: `p-font-mono`,
+      },
+      {
+        // tell screen readers not to automatically read the time as it changes
+        "aria-live": "off",
+        // span elements have no implicit role, but some screen readers (notably VoiceOver)
+        // treat them as a break between items in the DOM when using arrow keys
+        // (or left-to-right swipes on iOS) to read contents of a page. Using
+        // role='presentation' causes VoiceOver to NOT treat this span as a break.
+        role: "presentation",
+      }
+    );
+    el.appendChild(this.contentEl_);
+    videojs.dom.appendContent(el, " S");
+    // el.innerHTML("s");
+    return el;
+  }
 
   updateContent() {
     if (typeof this.player_.duration() !== "number") {
