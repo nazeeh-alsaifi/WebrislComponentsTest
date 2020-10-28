@@ -15,24 +15,38 @@ class SkipForwardButton extends VjsButton {
   }
 
   handleClick() {
-    this.player.pause();
-    const now = this.player.currentTime();
+    console.log("=======================================================");
+
+    this.player_.pause();
+    const now = this.player_.currentTime();
     // const indicator = +(now % 0.04).toFixed(6);
     const indicator = this.floatSafeRemainder(now, 0.04);
     const frameTime = 1 / this.options.fps;
 
     console.log("indicator", indicator);
     if (indicator != 0) {
-      const sub = +(now - indicator).toFixed(2);
-      const increment = +(sub + frameTime).toFixed(6);
-      this.player.currentTime(increment);
+      const sub = +(now - indicator).toFixed(4);
+      console.log("sub", sub);
 
-      console.log("sub", now - indicator);
+      const increment = +(sub + frameTime).toFixed(4);
+      console.log("increment", increment);
+
+      this.player_.currentTime(increment);
+      console.log("currenttime", this.player_.currentTime());
+      //------------ hot fix of bug found in currentTime() function
+      //------- need further improvment
+      if (this.floatSafeRemainder(this.player_.currentTime(), 0.04) != 0) {
+        this.player_.currentTime(this.player_.currentTime() + 0.00001);
+      }
     } else {
-      const increment = +(now + frameTime).toFixed(6);
-      this.player.currentTime(increment);
+      const increment = (now + frameTime).toFixed(4);
+      console.log("increment", increment);
+
+      this.player_.currentTime(increment);
+      console.log("currenttime", this.player_.currentTime());
     }
     console.log("clicked button", frameTime);
+    console.log("=======================================================");
   }
 
   floatSafeRemainder(val, step) {
@@ -56,22 +70,31 @@ class SkipBackwardButton extends VjsButton {
     return `vjs-skip-backward-item ${super.buildCSSClass()}`;
   }
   handleClick() {
+    console.log("=======================================================");
+
     this.player.pause();
     const now = this.player.currentTime();
     const indicator = this.floatSafeRemainder(now, 0.04);
     const frameTime = 1 / this.options.fps;
     if (indicator != 0) {
-      const sub = +(now - indicator).toFixed(2);
-      const decrement = sub;
-      this.player.currentTime(decrement);
+      const sub = +(now - indicator).toFixed(4);
+      console.log("sub", sub);
 
-      console.log("sub", now - indicator);
-    } else {
-      const decrement = (now - frameTime).toFixed(6);
+      const decrement = sub;
+      console.log("decrement", decrement);
+
       this.player.currentTime(decrement);
+      console.log("currenttime", this.player_.currentTime());
+    } else {
+      const decrement = (now - frameTime).toFixed(4);
+      console.log("decrement", decrement);
+
+      this.player.currentTime(decrement);
+      console.log("currenttime", this.player_.currentTime());
     }
 
-    console.log("clicked button", frameTime);
+    console.log("frameTime", frameTime);
+    console.log("=======================================================");
   }
   floatSafeRemainder(val, step) {
     var valDecCount = (val.toString().split(".")[1] || "").length;
