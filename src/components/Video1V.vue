@@ -290,8 +290,8 @@ export default {
 /* ======== timer component styling ========= */
 .video-js .vjs-timer-moveable {
   /* transform: translate(-25%, -25%); */
-  left: 50%;
-  top: 50%;
+  left: 0;
+  top: 0;
   z-index: 29;
   position: absolute;
   cursor: move;
@@ -300,10 +300,22 @@ export default {
   --border-opacity: 1;
   /* border-color: rgba(255, 255, 255, var(--border-opacity)); */
   background-color: rgba(0, 0, 0, 0.65);
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -o-user-select: none;
+  -ms-user-select: none;
+  -khtml-user-select: none;
+  user-select: none;
 }
 
 /* ================ NEW CONVENTION STYLING ==============*/
 
+.interactive-player p {
+  margin-block-start: 0;
+  margin-block-end: 0;
+  margin-inline-start: 0px;
+  margin-inline-end: 0px;
+}
 .interactive-player .p-items-center {
   align-items: center;
 }

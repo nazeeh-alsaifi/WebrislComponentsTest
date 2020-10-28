@@ -28,8 +28,13 @@ class TimerMoveable extends BaseComponent {
     // );
     //===========ENABLE ================
     // this.on("mousedown", this.dragMouseDown);
-    const ownerDoc = this.el_.ownerDocument;
-    this.on(ownerDoc, "mousedown", this.dragMouseDown);
+    // const ownerDoc = this.el_.ownerDocument;
+    // this.on(ownerDoc, "mousedown", this.dragMouseDown);
+    this.on(this.el_.ownerDocument, "mousedown", this.startMoving);
+    this.on(this.el_.ownerDocument, "mouseup", this.stopMoving);
+    console.log(this);
+    // this.on("mouseup", this.startMoving);
+
     // this.el_.onmousedown = this.dragMouseDown;
     // this.dragItem = this.el_;
     // console.log("ownerDoc", ownerDoc);
@@ -44,6 +49,8 @@ class TimerMoveable extends BaseComponent {
     this.newY = 0;
     this.prevX = 0;
     this.prevY = 0;
+
+    //=== jsfiddle
   }
 
   createEl() {
@@ -51,9 +58,8 @@ class TimerMoveable extends BaseComponent {
       className: "vjs-timer-moveable",
     });
   }
-
+  /* 
   //================ w3school
-
   dragMouseDown(e) {
     // console.log("dragMouseDown", e);
 
@@ -64,6 +70,9 @@ class TimerMoveable extends BaseComponent {
     // get the mouse cursor position at startup:
     this.prevX = e.clientX;
     this.prevY = e.clientY;
+    console.log("top", this.el_.style.top);
+    console.log("left", this.el_.style.left);
+
     this.on(this.el_.ownerDocument, "mouseup", this.closeDragElement);
     // call a function whenever the cursor moves:
     this.on(this.el_.ownerDocument, "mousemove", this.elementDrag);
@@ -84,32 +93,6 @@ class TimerMoveable extends BaseComponent {
     this.prevX = e.clientX;
     this.prevY = e.clientY;
 
-    // console.log("pageX:", e.pageX);
-    // console.log("pageY:", e.pageY);
-    // console.log("clientX:", e.clientX);
-    // console.log("pageY:", e.clientY);
-
-    /* left/write contraint */
-    // var offseX
-    // if (e.clientX - this.prevX < 0) {
-    //   offsetX = 0;
-    // } else if (
-    //   e.clientX - this.prevX + 102 >
-    //   this.el_.ownerDocument.body.clientWidth
-    // ) {
-    //   offsetX = this.el_.ownerDocument.body.clientWidth.body.clientWidth - 102;
-    // } else {
-    //   offsetX = e.clientX - this.prevX;
-    // }
-
-    // /*   top/bottom constraint */
-    // if (e.pageY - dragoffset.y < 0) {
-    //   offsetY = 0;
-    // } else if (e.pageY - dragoffset.y + 102 > document.body.clientHeight) {
-    //   offsetY = document.body.clientHeight - 102;
-    // } else {
-    //   offsetY = e.pageY - dragoffset.y;
-    // }
     // set the element's new position:
     this.el_.style.top = this.el_.offsetTop - this.newY + "px";
     this.el_.style.left = this.el_.offsetLeft - this.newX + "px";
@@ -124,8 +107,68 @@ class TimerMoveable extends BaseComponent {
     this.off(this.el_.ownerDocument, "mouseup", this.closeDragElement);
     this.off(this.el_.ownerDocument, "mousemove", this.elementDrag);
   }
+ */
+  //====================js fiddle:http://jsfiddle.net/manojmcet/XXTQd/
 
-  //====================js fiddle
+  startMoving(e) {
+    e = e || window.event;
+    this.posX = e.clientX;
+    this.posY = e.clientY;
+    this.divTop = this.el_.style.top.replace("px", "");
+    this.divLeft = this.el_.style.left.replace("px", "");
+    this.diffX = this.posX - this.divLeft;
+    this.diffY = this.posY - this.divTop;
+    this.on(this.el_.ownerDocument, "mousemove", this.mouseMove);
+    console.log(
+      "====================\n",
+      "posx:",
+      this.posX,
+      "\nposy:",
+      this.posY,
+      "\ndivTop:",
+      this.divTop,
+      "\ndivLeft:",
+      this.divLeft,
+      "\ndiffX",
+      this.diffX,
+      "\ndiffY",
+      this.diffY,
+      "\n============================"
+    );
+  }
+
+  mouseMove(e) {
+    e = e || window.event;
+    this.posX = e.clientX;
+    this.posY = e.clientY;
+    this.aX = this.posX - this.diffX;
+    this.aY = this.posY - this.diffY;
+    this.bounWidth =
+      this.parentComponent_.el_.offsetWidth - this.el_.offsetWidth;
+    this.bounHeight =
+      this.parentComponent_.el_.offsetHeight - this.el_.offsetHeight;
+    console.log(this.bounWidth);
+    if (
+      this.aX > 0 &&
+      this.aX < this.bounWidth &&
+      this.aY > 0 &&
+      this.aY < this.bounHeight
+    ) {
+      this.move(this.el_, this.aX, this.aY);
+    }
+    // console.log(this.bounWidth);
+  }
+
+  move(div, xpos, ypos) {
+    // console.log("1");
+
+    div.style.left = xpos + "px";
+    div.style.top = ypos + "px";
+  }
+
+  stopMoving() {
+    this.off(this.el_.ownerDocument, "mousemove", this.mouseMove);
+  }
 }
 
 class TimerDetailsWrapper extends BaseComponent {
@@ -153,10 +196,6 @@ class TimerVideoDetails extends BaseComponent {
     // return videojs.dom.createEl("div", {
     //   className: "p-p-2",
     // });
-    const lastChild = super.createEl("p", {
-      className: `p-text-center p-whitespace-no-wrap`,
-    });
-    el.appendChild(lastChild);
     return el;
   }
 }
@@ -222,6 +261,7 @@ class MyFrameDisplay extends NewFrameDisplay {
     // const className = this.buildCSSClass();
     const el = videojs.dom.createEl("p", {
       className: `p-text-center p-whitespace-no-wrap`,
+      innerHTML: `Frame `,
     });
     this.contentEl_ = videojs.dom.createEl(
       "span",
