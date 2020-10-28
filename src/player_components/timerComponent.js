@@ -71,7 +71,7 @@ class TimerMoveable extends BaseComponent {
 
   elementDrag(e) {
     // console.log("elementDrag", e);
-    console.log("this.el_", this.el_.offsetLeft);
+    // console.log("this.el_", this.el_.offsetLeft);
 
     e = e || window.event;
     // e.preventDefault();
@@ -149,9 +149,15 @@ class TimerVideoDetails extends BaseComponent {
   }
 
   createEl() {
-    return videojs.dom.createEl("div", {
-      className: "p-p-2",
+    const el = super.createEl("div", { className: "p-p-2" });
+    // return videojs.dom.createEl("div", {
+    //   className: "p-p-2",
+    // });
+    const lastChild = super.createEl("p", {
+      className: `p-text-center p-whitespace-no-wrap`,
     });
+    el.appendChild(lastChild);
+    return el;
   }
 }
 class MyTimeDisplay extends NewTimeDisplay {
@@ -161,32 +167,6 @@ class MyTimeDisplay extends NewTimeDisplay {
     this.on(player, "durationchange", this.updateContent);
   }
   createEl() {
-    // const className = this.buildCSSClass();
-    // const el = super.createEl("p", {
-    //   className: `${className} vjs-time-control vjs-control`,
-    //   innerHTML: `<span class="vjs-control-text" role="presentation">${this.localize(
-    //     this.labelText_
-    //   )}\u00a0</span>`,
-    // });
-
-    // this.contentEl_ = videojs.dom.createEl(
-    //   "p",
-    //   {
-    //     className: `${className}-display`,
-    //   },
-    //   {
-    //     // tell screen readers not to automatically read the time as it changes
-    //     "aria-live": "off",
-    //     // span elements have no implicit role, but some screen readers (notably VoiceOver)
-    //     // treat them as a break between items in the DOM when using arrow keys
-    //     // (or left-to-right swipes on iOS) to read contents of a page. Using
-    //     // role='presentation' causes VoiceOver to NOT treat this span as a break.
-    //     role: "presentation",
-    //   }
-    // );
-
-    // el.appendChild(this.contentEl_);
-
     //--------------------
     // const className = this.buildCSSClass();
     const el = videojs.dom.createEl("p", {
@@ -281,10 +261,30 @@ class MyFrameDisplay extends NewFrameDisplay {
     this.updateTextNode_(time);
   }
 }
+
+class MyFpsDisplay extends BaseComponent {
+  constructor(player, options) {
+    super(player, options);
+  }
+  createEl() {
+    const el = videojs.dom.createEl("p", {
+      className: `p-text-center p-whitespace-no-wrap`,
+    });
+    this.contentEl_ = videojs.dom.createEl("span", {
+      className: `p-font-mono`,
+      innerHTML: this.options_.fps + ` fps`,
+    });
+    el.appendChild(this.contentEl_);
+    // el.innerHTML("s");
+    return el;
+  }
+}
+
 export {
   TimerMoveable,
   TimerDetailsWrapper,
   MyTimeDisplay,
   TimerVideoDetails,
   MyFrameDisplay,
+  MyFpsDisplay,
 };

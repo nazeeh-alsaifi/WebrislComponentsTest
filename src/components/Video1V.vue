@@ -43,6 +43,7 @@ import {
   MyTimeDisplay,
   TimerVideoDetails,
   MyFrameDisplay,
+  MyFpsDisplay,
 } from "@/player_components/timerComponent.js";
 import { mapActions, mapGetters } from "vuex";
 
@@ -75,6 +76,7 @@ export default {
                     children: {
                       MyTimeDisplay: true,
                       MyFrameDisplay: { fps: 25 },
+                      MyFpsDisplay: { fps: 25 },
                     },
                   },
                 },
@@ -146,25 +148,25 @@ export default {
   },
   mounted() {
     //============= Regestring componenets ==========
-    //---- extend component
+    //---- tools components
     videojs.registerComponent("ToolsWrapper", ToolsWrapper);
     videojs.registerComponent("ToolsToggler", ToolsToggler);
-    videojs.registerComponent("TimerMoveable", TimerMoveable);
-    videojs.registerComponent("TimerDetailsWrapper", TimerDetailsWrapper);
-    videojs.registerComponent("TimerVideoDetails", TimerVideoDetails);
-
-    //------- extend NewTimeDisplay
-    videojs.registerComponent("MyTimeDisplay", MyTimeDisplay);
-    videojs.registerComponent("MyFrameDisplay", MyFrameDisplay);
-    //---- extend button
-    videojs.registerComponent("SkipForwardButton", SkipForwardButton);
-    videojs.registerComponent("SkipBackwardButton", SkipBackwardButton);
     videojs.registerComponent("ToolsParentButton", ToolsParentButton);
     videojs.registerComponent("FirstToolButton", FirstToolButton);
     videojs.registerComponent("SecondToolButton", SecondToolButton);
     videojs.registerComponent("TimerButton", TimerButton);
 
-    //------ extend clickable component
+    //------- Timer Components
+    videojs.registerComponent("TimerMoveable", TimerMoveable);
+    videojs.registerComponent("TimerDetailsWrapper", TimerDetailsWrapper);
+    videojs.registerComponent("TimerVideoDetails", TimerVideoDetails);
+    videojs.registerComponent("MyTimeDisplay", MyTimeDisplay);
+    videojs.registerComponent("MyFrameDisplay", MyFrameDisplay);
+    videojs.registerComponent("MyFpsDisplay", MyFpsDisplay);
+
+    //---- control bar compoennts
+    videojs.registerComponent("SkipForwardButton", SkipForwardButton);
+    videojs.registerComponent("SkipBackwardButton", SkipBackwardButton);
 
     //========= player ============
     this.player = videojs(
