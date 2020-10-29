@@ -290,8 +290,8 @@ export default {
 /* ======== timer component styling ========= */
 .video-js .vjs-timer-moveable {
   /* transform: translate(-25%, -25%); */
-  left: 0;
-  top: 0;
+  /* left: 0; */
+  /* top: 0; */
   z-index: 29;
   position: absolute;
   cursor: move;

@@ -111,6 +111,11 @@ class TimerMoveable extends BaseComponent {
   //====================js fiddle:http://jsfiddle.net/manojmcet/XXTQd/
 
   startMoving(e) {
+    console.log("widthoffset", this.parentComponent_.el_.offsetWidth);
+    this.el_.style.left =
+      Math.floor(this.parentComponent_.el_.offsetWidth * 0.5) + "px";
+    this.el_.style.top =
+      Math.floor(this.parentComponent_.el_.offsetHeight * 0.5) + "px";
     e = e || window.event;
     this.posX = e.clientX;
     this.posY = e.clientY;
@@ -227,7 +232,7 @@ class MyTimeDisplay extends NewTimeDisplay {
       }
     );
     el.appendChild(this.contentEl_);
-    videojs.dom.appendContent(el, " S");
+    videojs.dom.appendContent(el, " s");
     // el.innerHTML("s");
     return el;
   }
@@ -279,7 +284,6 @@ class MyFrameDisplay extends NewFrameDisplay {
       }
     );
     el.appendChild(this.contentEl_);
-    // el.innerHTML("s");
     return el;
   }
 
