@@ -1,56 +1,17 @@
 import videojs from "video.js";
 import { NewTimeDisplay, NewFrameDisplay } from "./utils/time-display.js";
-// import document from "global/document";
 
-// import { bind } from "./utils/fn";
-// import { bind, throttle, UPDATE_REFRESH_INTERVAL } from "video.js/core.js";
-// import * as core from "video.js/core.js";
-// let VjsButton = videojs.getComponent("Button");
 let BaseComponent = videojs.getComponent("Component");
-// let TimeDisplay = videojs.getComponent("TimeDisplay");
-// let NewTimeDisplay = videojs.getComponent("NewTimeDisplay");
-
-//==================== BUTTONS =============
+let VjsButton = videojs.getComponent("Button");
 
 //======================= COMPONENTS ===============
 class TimerMoveable extends BaseComponent {
   constructor(player, options) {
     super(player, options);
     this.hide();
-    // console.log(bind);
-    // this.elementDrag = throttle(
-    //   bind(this, this.elementDrag),
-    //   UPDATE_REFRESH_INTERVAL
-    // );
-    // console.log("dom", videojs.dom);
-    // console.log("fn", videojs);
-    // this.parent = this.parentComponent_;
-    // );
-    //===========ENABLE ================
-    // this.on("mousedown", this.dragMouseDown);
-    // const ownerDoc = this.el_.ownerDocument;
-    // this.on(ownerDoc, "mousedown", this.dragMouseDown);
+
     this.on(this.el_.ownerDocument, "mousedown", this.startMoving);
     this.on(this.el_.ownerDocument, "mouseup", this.stopMoving);
-    console.log(this);
-    // this.on("mouseup", this.startMoving);
-
-    // this.el_.onmousedown = this.dragMouseDown;
-    // this.dragItem = this.el_;
-    // console.log("ownerDoc", ownerDoc);
-    // console.log("this.el_", this.el_.offsetLeft);
-
-    // console.log("this.parent", this.parentComponent_);
-    // console.log("videojs", videojs.throttle);
-
-    // const testRect = getBoundingClientRect(this.el_);
-    // console.log("testRec", testRect);
-    this.newX = 0;
-    this.newY = 0;
-    this.prevX = 0;
-    this.prevY = 0;
-
-    //=== jsfiddle
   }
 
   createEl() {
@@ -58,64 +19,15 @@ class TimerMoveable extends BaseComponent {
       className: "vjs-timer-moveable",
     });
   }
-  /* 
-  //================ w3school
-  dragMouseDown(e) {
-    // console.log("dragMouseDown", e);
 
-    e = e || window.event;
-    // e.preventDefault();
-    // e.stopPropagation();
-
-    // get the mouse cursor position at startup:
-    this.prevX = e.clientX;
-    this.prevY = e.clientY;
-    console.log("top", this.el_.style.top);
-    console.log("left", this.el_.style.left);
-
-    this.on(this.el_.ownerDocument, "mouseup", this.closeDragElement);
-    // call a function whenever the cursor moves:
-    this.on(this.el_.ownerDocument, "mousemove", this.elementDrag);
-  }
-
-  elementDrag(e) {
-    // console.log("elementDrag", e);
-    // console.log("this.el_", this.el_.offsetLeft);
-
-    e = e || window.event;
-    // e.preventDefault();
-    // e.stopPropagation();
-
-    // calculate the new cursor position:
-    this.newX = this.prevX - e.clientX;
-    this.newY = this.prevY - e.clientY;
-
-    this.prevX = e.clientX;
-    this.prevY = e.clientY;
-
-    // set the element's new position:
-    this.el_.style.top = this.el_.offsetTop - this.newY + "px";
-    this.el_.style.left = this.el_.offsetLeft - this.newX + "px";
-  }
-
-  closeDragElement() {
-    // e.preventDefault();
-    // e.stopPropagation();
-
-    // stop moving when mouse button is released:
-    // console.log("closeDragElement", e);
-    this.off(this.el_.ownerDocument, "mouseup", this.closeDragElement);
-    this.off(this.el_.ownerDocument, "mousemove", this.elementDrag);
-  }
- */
   //====================js fiddle:http://jsfiddle.net/manojmcet/XXTQd/
 
   startMoving(e) {
     console.log("widthoffset", this.parentComponent_.el_.offsetWidth);
-    this.el_.style.left =
-      Math.floor(this.parentComponent_.el_.offsetWidth * 0.5) + "px";
-    this.el_.style.top =
-      Math.floor(this.parentComponent_.el_.offsetHeight * 0.5) + "px";
+    // this.el_.style.left =
+    //   Math.floor(this.parentComponent_.el_.offsetWidth * 0.5) + "px";
+    // this.el_.style.top =
+    //   Math.floor(this.parentComponent_.el_.offsetHeight * 0.5) + "px";
     e = e || window.event;
     this.posX = e.clientX;
     this.posY = e.clientY;
@@ -124,6 +36,7 @@ class TimerMoveable extends BaseComponent {
     this.diffX = this.posX - this.divLeft;
     this.diffY = this.posY - this.divTop;
     this.on(this.el_.ownerDocument, "mousemove", this.mouseMove);
+    /* 
     console.log(
       "====================\n",
       "posx:",
@@ -139,7 +52,8 @@ class TimerMoveable extends BaseComponent {
       "\ndiffY",
       this.diffY,
       "\n============================"
-    );
+    ); 
+    */
   }
 
   mouseMove(e) {
@@ -152,7 +66,7 @@ class TimerMoveable extends BaseComponent {
       this.parentComponent_.el_.offsetWidth - this.el_.offsetWidth;
     this.bounHeight =
       this.parentComponent_.el_.offsetHeight - this.el_.offsetHeight;
-    console.log(this.bounWidth);
+    // console.log(this.bounWidth);
     if (
       this.aX > 0 &&
       this.aX < this.bounWidth &&
@@ -207,7 +121,7 @@ class TimerVideoDetails extends BaseComponent {
 class MyTimeDisplay extends NewTimeDisplay {
   constructor(player, options) {
     super(player, options);
-
+    this.resetTime = 0;
     this.on(player, "durationchange", this.updateContent);
   }
   createEl() {
@@ -247,9 +161,9 @@ class MyTimeDisplay extends NewTimeDisplay {
     // @deprecated We should only use remainingTimeDisplay
     // as of video.js 7
     if (this.player_.currentTime) {
-      time = this.player_.currentTime();
+      time = this.player_.currentTime() - this.resetTime;
     } else {
-      time = this.player_.currentTime();
+      time = this.player_.currentTime() - this.resetTime;
     }
 
     this.updateTextNode_(time);
@@ -259,6 +173,8 @@ class MyTimeDisplay extends NewTimeDisplay {
 class MyFrameDisplay extends NewFrameDisplay {
   constructor(player, options) {
     super(player, options);
+    this.resetTime = 0;
+
     this.on(player, "durationchange", this.updateContent);
   }
   createEl() {
@@ -297,9 +213,9 @@ class MyFrameDisplay extends NewFrameDisplay {
     // @deprecated We should only use remainingTimeDisplay
     // as of video.js 7
     if (this.player_.currentTime) {
-      time = this.player_.currentTime() * this.options_.fps;
+      time = (this.player_.currentTime() - this.resetTime) * this.options_.fps;
     } else {
-      time = this.player_.currentTime() * this.options_.fps;
+      time = (this.player_.currentTime() - this.resetTime) * this.options_.fps;
     }
 
     this.updateTextNode_(time);
@@ -323,7 +239,24 @@ class MyFpsDisplay extends BaseComponent {
     return el;
   }
 }
+class ResetTimer extends VjsButton {
+  constructor(player, options) {
+    super(player, options);
+    this.controlText("Reset Button");
 
+    // videojs.do.emptyEl(this.el());
+  }
+  buildCSSClass() {
+    return `vjs-reset-timer`;
+  }
+  handleClick(e) {
+    e.preventDefault();
+    e.stopPropagation();
+    this.player_.pause();
+    this.player_.TimerMoveable.TimerDetailsWrapper.TimerVideoDetails.MyTimeDisplay.resetTime = this.player_.currentTime();
+    this.player_.TimerMoveable.TimerDetailsWrapper.TimerVideoDetails.MyFrameDisplay.resetTime = this.player_.currentTime();
+  }
+}
 export {
   TimerMoveable,
   TimerDetailsWrapper,
@@ -331,4 +264,5 @@ export {
   TimerVideoDetails,
   MyFrameDisplay,
   MyFpsDisplay,
+  ResetTimer,
 };

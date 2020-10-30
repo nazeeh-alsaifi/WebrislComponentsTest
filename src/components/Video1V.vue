@@ -44,6 +44,7 @@ import {
   TimerVideoDetails,
   MyFrameDisplay,
   MyFpsDisplay,
+  ResetTimer,
 } from "@/player_components/timerComponent.js";
 import { mapActions, mapGetters } from "vuex";
 
@@ -79,6 +80,7 @@ export default {
                       MyFpsDisplay: { fps: 25 },
                     },
                   },
+                  ResetTimer: true,
                 },
               },
             },
@@ -127,7 +129,7 @@ export default {
     },
     playerFrame: function () {
       if (this.player !== null) {
-        return Math.floor(this.player.currentTime() * 25);
+        return +(this.player.currentTime() * 25).toFixed(0);
       }
       return 0;
     },
@@ -163,6 +165,9 @@ export default {
     videojs.registerComponent("MyTimeDisplay", MyTimeDisplay);
     videojs.registerComponent("MyFrameDisplay", MyFrameDisplay);
     videojs.registerComponent("MyFpsDisplay", MyFpsDisplay);
+    videojs.registerComponent("ResetTimer", ResetTimer);
+
+    // ResetTimer
 
     //---- control bar compoennts
     videojs.registerComponent("SkipForwardButton", SkipForwardButton);
@@ -286,12 +291,28 @@ export default {
   font-size: 2em;
   font-weight: 500;
 }
+.video-js .vjs-timer-moveable button {
+  width: 48px;
+  height: 48px;
+  justify-content: center;
+  align-items: center;
+  border-width: 2px;
+  border-radius: 9999px;
+  background-color: #2c3e50;
+  border-style: solid;
+  border-color: white;
+}
+.video-js .vjs-timer-moveable .vjs-icon-placeholder:before {
+  font-family: "VideoJs";
+  content: "\f116";
+  font-size: 2em;
+}
 
 /* ======== timer component styling ========= */
 .video-js .vjs-timer-moveable {
   /* transform: translate(-25%, -25%); */
-  /* left: 0; */
-  /* top: 0; */
+  left: 0;
+  top: 0;
   z-index: 29;
   position: absolute;
   cursor: move;
@@ -336,5 +357,38 @@ export default {
   font-family: Menlo, Monaco, Consolas, "Liberation Mono", "Courier New",
     monospace;
 }
+.interactive-player .p-text-black {
+  color: rgb(255, 255, 255);
+}
+.interactive-player .p-bg-white {
+  background-color: rgb(7, 10, 12);
+}
+.interactive-player .p-text-black {
+  --text-opacity: 1;
+  color: #000;
+  color: rgba(0, 0, 0, var(--text-opacity));
+}
+.interactive-player .p-bg-white {
+  --bg-opacity: 1;
+  background-color: #fff;
+  background-color: rgba(255, 255, 255, var(--bg-opacity));
+}
+.interactive-player .p-ml-0 {
+  margin-left: 0;
+}
+.interactive-player .p-m-2 {
+  margin: 8px;
+}
+.interactive-player .p-rounded-full {
+  border-radius: 9999px;
+}
+.interactive-player .p-h-12 {
+  height: 48px;
+}
+.interactive-player .p-w-12 {
+  width: 48px;
+}
+
+/* "\f116" */
 </style>
 
