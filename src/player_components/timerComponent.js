@@ -123,6 +123,9 @@ class MyTimeDisplay extends NewTimeDisplay {
     super(player, options);
     this.resetTime = 0;
     this.on(player, "durationchange", this.updateContent);
+    this.on(player, "ended", () => {
+      this.resetTime = 0;
+    });
   }
   createEl() {
     //--------------------
@@ -176,6 +179,9 @@ class MyFrameDisplay extends NewFrameDisplay {
     this.resetTime = 0;
 
     this.on(player, "durationchange", this.updateContent);
+    this.on(player, "ended", () => {
+      this.resetTime = 0;
+    });
   }
   createEl() {
     //--------------------
