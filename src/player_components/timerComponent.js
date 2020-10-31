@@ -260,7 +260,9 @@ class ResetTimer extends VjsButton {
     e.stopPropagation();
     this.player_.pause();
     this.player_.TimerMoveable.TimerDetailsWrapper.TimerVideoDetails.MyTimeDisplay.resetTime = this.player_.currentTime();
+    this.player_.TimerMoveable.TimerDetailsWrapper.TimerVideoDetails.MyTimeDisplay.updateContent();
     this.player_.TimerMoveable.TimerDetailsWrapper.TimerVideoDetails.MyFrameDisplay.resetTime = this.player_.currentTime();
+    this.player_.TimerMoveable.TimerDetailsWrapper.TimerVideoDetails.MyFrameDisplay.updateContent();
   }
 }
 export {
