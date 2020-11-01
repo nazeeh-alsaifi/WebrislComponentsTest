@@ -10,33 +10,33 @@ class TimerMoveable extends BaseComponent {
     super(player, options);
     this.hide();
 
-    this.on(this.el_.ownerDocument, "mousedown", this.startMoving);
-    this.on(this.el_.ownerDocument, "mouseup", this.stopMoving);
+    // this.on(this.el_.ownerDocument, "mousedown", this.startMoving);
+    // this.on(this.el_.ownerDocument, "mouseup", this.stopMoving);
   }
 
   createEl() {
     return videojs.dom.createEl("div", {
-      className: "vjs-timer-moveable",
+      className: "vjs-timer-moveable draggable",
     });
   }
 
   //====================js fiddle:http://jsfiddle.net/manojmcet/XXTQd/
 
-  startMoving(e) {
-    console.log("widthoffset", this.parentComponent_.el_.offsetWidth);
-    // this.el_.style.left =
-    //   Math.floor(this.parentComponent_.el_.offsetWidth * 0.5) + "px";
-    // this.el_.style.top =
-    //   Math.floor(this.parentComponent_.el_.offsetHeight * 0.5) + "px";
-    e = e || window.event;
-    this.posX = e.clientX;
-    this.posY = e.clientY;
-    this.divTop = this.el_.style.top.replace("px", "");
-    this.divLeft = this.el_.style.left.replace("px", "");
-    this.diffX = this.posX - this.divLeft;
-    this.diffY = this.posY - this.divTop;
-    this.on(this.el_.ownerDocument, "mousemove", this.mouseMove);
-    /* 
+  // startMoving(e) {
+  //   console.log("widthoffset", this.parentComponent_.el_.offsetWidth);
+  //   // this.el_.style.left =
+  //   //   Math.floor(this.parentComponent_.el_.offsetWidth * 0.5) + "px";
+  //   // this.el_.style.top =
+  //   //   Math.floor(this.parentComponent_.el_.offsetHeight * 0.5) + "px";
+  //   e = e || window.event;
+  //   this.posX = e.clientX;
+  //   this.posY = e.clientY;
+  //   this.divTop = this.el_.style.top.replace("px", "");
+  //   this.divLeft = this.el_.style.left.replace("px", "");
+  //   this.diffX = this.posX - this.divLeft;
+  //   this.diffY = this.posY - this.divTop;
+  //   this.on(this.el_.ownerDocument, "mousemove", this.mouseMove);
+  /* 
     console.log(
       "====================\n",
       "posx:",
@@ -54,40 +54,40 @@ class TimerMoveable extends BaseComponent {
       "\n============================"
     ); 
     */
-  }
+  // }
 
-  mouseMove(e) {
-    e = e || window.event;
-    this.posX = e.clientX;
-    this.posY = e.clientY;
-    this.aX = this.posX - this.diffX;
-    this.aY = this.posY - this.diffY;
-    this.bounWidth =
-      this.parentComponent_.el_.offsetWidth - this.el_.offsetWidth;
-    this.bounHeight =
-      this.parentComponent_.el_.offsetHeight - this.el_.offsetHeight;
-    // console.log(this.bounWidth);
-    if (
-      this.aX > 0 &&
-      this.aX < this.bounWidth &&
-      this.aY > 0 &&
-      this.aY < this.bounHeight
-    ) {
-      this.move(this.el_, this.aX, this.aY);
-    }
-    // console.log(this.bounWidth);
-  }
+  // mouseMove(e) {
+  //   e = e || window.event;
+  //   this.posX = e.clientX;
+  //   this.posY = e.clientY;
+  //   this.aX = this.posX - this.diffX;
+  //   this.aY = this.posY - this.diffY;
+  //   this.bounWidth =
+  //     this.parentComponent_.el_.offsetWidth - this.el_.offsetWidth;
+  //   this.bounHeight =
+  //     this.parentComponent_.el_.offsetHeight - this.el_.offsetHeight;
+  //   // console.log(this.bounWidth);
+  //   if (
+  //     this.aX > 0 &&
+  //     this.aX < this.bounWidth &&
+  //     this.aY > 0 &&
+  //     this.aY < this.bounHeight
+  //   ) {
+  //     this.move(this.el_, this.aX, this.aY);
+  //   }
+  //   // console.log(this.bounWidth);
+  // }
 
-  move(div, xpos, ypos) {
-    // console.log("1");
+  // move(div, xpos, ypos) {
+  //   // console.log("1");
 
-    div.style.left = xpos + "px";
-    div.style.top = ypos + "px";
-  }
+  //   div.style.left = xpos + "px";
+  //   div.style.top = ypos + "px";
+  // }
 
-  stopMoving() {
-    this.off(this.el_.ownerDocument, "mousemove", this.mouseMove);
-  }
+  // stopMoving() {
+  //   this.off(this.el_.ownerDocument, "mousemove", this.mouseMove);
+  // }
 }
 
 class TimerDetailsWrapper extends BaseComponent {
