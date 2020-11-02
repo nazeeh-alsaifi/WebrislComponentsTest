@@ -53,6 +53,8 @@ class SecondToolButton extends VjsButton {
     this.player = player;
     this.options = options;
     // videojs.dom.emptyEl(this.el());
+    this.hidden = true;
+
   }
   buildCSSClass() {
     return `vjs-second-tool-button`;
@@ -62,6 +64,13 @@ class SecondToolButton extends VjsButton {
     e.stopPropagation();
     // this.player.controlBar.SkipBackwardButton.hide();
     console.log("second tool clicked!!");
+    if (!this.hidden) {
+      this.player.RulerWrapper.hide();
+      this.hidden = true;
+    } else {
+      this.player.RulerWrapper.show();
+      this.hidden = false;
+    }
   }
 }
 class TimerButton extends VjsButton {

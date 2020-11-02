@@ -92,7 +92,7 @@ export default {
               },
             },
           },
-          RulerWrapper: true,
+          RulerWrapper: { src: require("@/assets/Ruler_11.png") },
           controlBar: {
             children: {
               SkipBackwardButton: { fps: 25 },
@@ -198,17 +198,77 @@ export default {
       var x = (parseFloat(target.getAttribute("data-x")) || 0) + event.dx;
       var y = (parseFloat(target.getAttribute("data-y")) || 0) + event.dy;
 
+      var angle = parseFloat(target.getAttribute("data-angle")) || 0;
       // translate the element
       target.style.webkitTransform = target.style.transform =
-        "translate(" + x + "px, " + y + "px)";
+        "translate(" + x + "px, " + y + "px) rotate(" + angle + "rad" + ")";
 
       // update the posiion attributes
       target.setAttribute("data-x", x);
       target.setAttribute("data-y", y);
+      target.setAttribute("data-angle", angle);
     }
 
     // this function is used later in the resizing and gesture demos
     window.dragMoveListener = dragMoveListener;
+
+    //--------------------- ROTATION-------------
+
+    interact(".rotation-handle").draggable({
+      onstart: function (event) {
+        var box = event.target.parentElement;
+        var rect = box.getBoundingClientRect();
+
+        // store the center as the element has css `transform-origin: center center`
+        box.setAttribute("data-center-x", rect.left + rect.width / 2);
+        box.setAttribute("data-center-y", rect.top + rect.height / 2);
+        // get the angle of the element when the drag starts
+        box.setAttribute("data-angle", getDragAngle(event));
+      },
+      onmove: function (event) {
+        var box = event.target.parentElement;
+
+        var pos = {
+          x: parseFloat(box.getAttribute("data-x")) || 0,
+          y: parseFloat(box.getAttribute("data-y")) || 0,
+        };
+
+        var angle = getDragAngle(event);
+
+        // update transform style on dragmove
+        box.style.transform =
+          "translate(" +
+          pos.x +
+          "px, " +
+          pos.y +
+          "px) rotate(" +
+          angle +
+          "rad" +
+          ")";
+      },
+      onend: function (event) {
+        var box = event.target.parentElement;
+
+        // save the angle on dragend
+        box.setAttribute("data-angle", getDragAngle(event));
+      },
+    });
+
+    function getDragAngle(event) {
+      var box = event.target.parentElement;
+      var startAngle = parseFloat(box.getAttribute("data-angle")) || 0;
+      var center = {
+        x: parseFloat(box.getAttribute("data-center-x")) || 0,
+        y: parseFloat(box.getAttribute("data-center-y")) || 0,
+      };
+      var angle = Math.atan2(
+        center.y - event.clientY,
+        center.x - event.clientX
+      );
+
+      return angle - startAngle;
+    }
+
     //===============================interact js testing end=========================================
 
     //============= Regestring componenets ==========
@@ -374,8 +434,8 @@ export default {
 /* ======== timer component styling ========= */
 .video-js .vjs-timer-moveable {
   /* transform: translate(-25%, -25%); */
-  left: 0;
-  top: 0;
+  left: 50%;
+  top: 50%;
   z-index: 29;
   position: absolute;
   cursor: move;
@@ -398,8 +458,8 @@ export default {
 
 .video-js .vjs-ruler-wrapper {
   /* transform: translate(-25%, -25%); */
-  left: 0;
-  top: 0;
+  left: 20%;
+  top: 20%;
   z-index: 29;
   position: absolute;
   cursor: move;
@@ -420,8 +480,23 @@ export default {
   transform: translate(0px, 0px);
 }
 .video-js .vjs-ruler-wrapper img {
-  width: 50px;
-  height: 50px;
+  width: 50%;
+  height: 50%;
+}
+.rotation-handle {
+  padding: 3px 4px;
+  display: table;
+  position: absolute;
+  left: 50%;
+  right: 50%;
+  bottom: -10px;
+  background-color: #ff1661;
+  border-radius: 10rem;
+  line-height: 1;
+  text-align: center;
+  font-weight: bold;
+  color: #fff;
+  cursor: move;
 }
 /* ================ NEW CONVENTION STYLING ==============*/
 

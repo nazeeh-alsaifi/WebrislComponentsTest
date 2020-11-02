@@ -265,6 +265,30 @@ class ResetTimer extends VjsButton {
     this.player_.TimerMoveable.TimerDetailsWrapper.TimerVideoDetails.MyFrameDisplay.updateContent();
   }
 }
+// TimerMoveable.prototype.options_ = {
+//   children: {
+//     TimerDetailsWrapper: {
+//       children: {
+//         TimerVideoDetails: {
+//           children: {
+//             MyTimeDisplay: true,
+//             MyFrameDisplay: { fps: TimerMoveable.options_.fps },
+//             MyFpsDisplay: { fps: TimerMoveable.options_.fps },
+//           },
+//         },
+//         ResetTimer: true,
+//       },
+//     },
+//   },
+// };
+
+// TimerDetailsWrapper.prototype.options_ = {
+//   children: ["TimerVideoDetails"],
+// };
+// TimerDetailsWrapper.prototype.options_ = {
+//   children: ["MyTimeDisplay", "MyFrameDisplay", "MyFpsDisplay"],
+// };
+
 export {
   TimerMoveable,
   TimerDetailsWrapper,
