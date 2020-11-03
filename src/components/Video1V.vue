@@ -46,7 +46,10 @@ import {
   MyFpsDisplay,
   ResetTimer,
 } from "@/player_components/timerComponent.js";
-import { RulerWrapper } from "@/player_components/rulerComponents.js";
+import {
+  RulerWrapper,
+  ProtactorWrapper,
+} from "@/player_components/rulerComponents.js";
 import { mapActions, mapGetters } from "vuex";
 import "@interactjs/auto-start";
 import "@interactjs/actions/drag";
@@ -93,6 +96,7 @@ export default {
             },
           },
           RulerWrapper: { src: require("@/assets/exportedRuler2.svg") },
+          ProtactorWrapper: { src: require("@/assets/protactor.svg") },
           controlBar: {
             children: {
               SkipBackwardButton: { fps: 25 },
@@ -347,6 +351,7 @@ export default {
 
     // Rulers Components
     videojs.registerComponent("RulerWrapper", RulerWrapper);
+    videojs.registerComponent("ProtactorWrapper", ProtactorWrapper);
 
     //---- control bar compoennts
     videojs.registerComponent("SkipForwardButton", SkipForwardButton);

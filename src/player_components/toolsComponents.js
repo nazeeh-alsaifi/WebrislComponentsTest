@@ -33,7 +33,7 @@ class FirstToolButton extends VjsButton {
     this.controlText("First Tool Button");
     this.player = player;
     this.options = options;
-    // videojs.dom.emptyEl(this.el());
+    this.hidden = true;
   }
   buildCSSClass() {
     return `vjs-first-tool-button`;
@@ -43,6 +43,13 @@ class FirstToolButton extends VjsButton {
     e.stopPropagation();
     // this.player.controlBar.SkipBackwardButton.hide();
     console.log("first tool clicked!!");
+    if (!this.hidden) {
+      this.player.ProtactorWrapper.hide();
+      this.hidden = true;
+    } else {
+      this.player.ProtactorWrapper.show();
+      this.hidden = false;
+    }
   }
 }
 
@@ -54,7 +61,6 @@ class SecondToolButton extends VjsButton {
     this.options = options;
     // videojs.dom.emptyEl(this.el());
     this.hidden = true;
-
   }
   buildCSSClass() {
     return `vjs-second-tool-button`;
