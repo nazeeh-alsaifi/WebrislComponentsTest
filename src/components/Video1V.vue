@@ -92,7 +92,7 @@ export default {
               },
             },
           },
-          RulerWrapper: { src: require("@/assets/Ruler_11.png") },
+          RulerWrapper: { src: require("@/assets/exportedRuler2.svg") },
           controlBar: {
             children: {
               SkipBackwardButton: { fps: 25 },
@@ -268,7 +268,63 @@ export default {
 
       return angle - startAngle;
     }
+    // ------------ drggable - resizeable
+    interact(".resize-drag")
+      .resizable({
+        // resize from all edges and corners
+        edges: { left: true, right: true, bottom: true, top: true },
 
+        listeners: {
+          move(event) {
+            var target = event.target;
+            var x = parseFloat(target.getAttribute("data-x")) || 0;
+            var y = parseFloat(target.getAttribute("data-y")) || 0;
+
+            // update the element's style
+            target.style.width = event.rect.width + "px";
+            target.style.height = event.rect.height + "px";
+
+            // translate when resizing from top or left edges
+            x += event.deltaRect.left;
+            y += event.deltaRect.top;
+
+            target.style.webkitTransform = target.style.transform =
+              "translate(" + x + "px," + y + "px)";
+
+            target.setAttribute("data-x", x);
+            target.setAttribute("data-y", y);
+            // target.textContent =
+            //   Math.round(event.rect.width) +
+            //   "\u00D7" +
+            //   Math.round(event.rect.height);
+          },
+        },
+        modifiers: [
+          // keep the edges inside the parent
+          interact.modifiers.restrictEdges({
+            outer: "parent",
+          }),
+          interact.modifiers.aspectRatio({
+            ratio: "preserve",
+          }),
+
+          // minimum size
+          interact.modifiers.restrictSize({
+            min: { width: 100, height: 50 },
+          }),
+        ],
+
+        inertia: true,
+      })
+      .draggable({
+        listeners: { move: window.dragMoveListener },
+        inertia: true,
+        modifiers: [
+          interact.modifiers.restrictRect({
+            restriction: "parent",
+          }),
+        ],
+      });
     //===============================interact js testing end=========================================
 
     //============= Regestring componenets ==========
@@ -463,11 +519,11 @@ export default {
   z-index: 29;
   position: absolute;
   cursor: move;
-  border-width: 2px;
-  border-radius: 4px;
+  /* border-width: 2px; */
+  /* border-radius: 4px; */
   --border-opacity: 1;
   /* border-color: rgba(255, 255, 255, var(--border-opacity)); */
-  background-color: rgba(0, 0, 0, 0.65);
+  /* background-color: rgba(0, 0, 0, 0.65); */
   /* -webkit-user-select: none;
   -moz-user-select: none;
   -o-user-select: none;
@@ -479,9 +535,17 @@ export default {
   -webkit-transform: translate(0px, 0px);
   transform: translate(0px, 0px);
 }
+.video-js .vjs-ruler-wrapper:hover {
+  cursor: move;
+  border-width: 2px;
+  border-radius: 4px;
+  --border-opacity: 1;
+  border-color: rgba(255, 255, 255, var(--border-opacity));
+  /* background-color: rgba(0, 0, 0, 0.65); */
+}
 .video-js .vjs-ruler-wrapper img {
-  width: 50%;
-  height: 50%;
+  width: 100%;
+  height: 100%;
 }
 .rotation-handle {
   padding: 3px 4px;
