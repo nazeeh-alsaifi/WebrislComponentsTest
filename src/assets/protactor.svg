@@ -1,37 +1,9 @@
-<svg xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:svg="http://www.w3.org/2000/svg" xmlns="http://www.w3.org/2000/svg" xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd" xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape" width="415.65945" height="289.84894" id="svg2" version="1.1" inkscape:version="0.48.1 " sodipodi:docname="lecture_angle_rapporteur.svg">
-  <title id="title6219">Lecture d'un angle en degrés</title>
-  <defs id="defs4">
-    <marker inkscape:stockid="Arrow1Mstart" orient="auto" refY="0" refX="0" id="Arrow1Mstart" style="overflow:visible">
-      <path id="path5214" d="M 0,0 5,-5 -12.5,0 5,5 0,0 z" style="fill-rule:evenodd;stroke:#000000;stroke-width:1pt;marker-start:none" transform="matrix(0.4,0,0,0.4,4,0)" inkscape:connector-curvature="0"/>
-    </marker>
-    <marker inkscape:stockid="Arrow1Mend" orient="auto" refY="0" refX="0" id="Arrow1Mend" style="overflow:visible">
-      <path id="path5217" d="M 0,0 5,-5 -12.5,0 5,5 0,0 z" style="fill-rule:evenodd;stroke:#000000;stroke-width:1pt;marker-start:none" transform="matrix(-0.4,0,0,-0.4,-4,0)" inkscape:connector-curvature="0"/>
-    </marker>
-  </defs>
-  <sodipodi:namedview id="base" pagecolor="#ffffff" bordercolor="#666666" borderopacity="1.0" inkscape:pageopacity="0.0" inkscape:pageshadow="2" inkscape:zoom="0.7" inkscape:cx="531.71139" inkscape:cy="204.32471" inkscape:document-units="px" inkscape:current-layer="layer1" showgrid="false" showguides="true" inkscape:guide-bbox="true" inkscape:window-width="1008" inkscape:window-height="557" inkscape:window-x="110" inkscape:window-y="110" inkscape:window-maximized="0" fit-margin-top="0" fit-margin-left="0" fit-margin-right="0" fit-margin-bottom="0"/>
-  <metadata id="metadata7">
-    <rdf:RDF>
-      <cc:Work rdf:about="">
-        <dc:format>image/svg+xml</dc:format>
-        <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
-        <dc:title>Lecture d'un angle en degrés</dc:title>
-        <dc:date>2011-09-26</dc:date>
-        <dc:creator>
-          <cc:Agent>
-            <dc:title>Christophe Dang Ngoc Chan</dc:title>
-          </cc:Agent>
-        </dc:creator>
-        <cc:license rdf:resource="http://creativecommons.org/licenses/publicdomain/"/>
-        <dc:coverage>protractor, angle, degree</dc:coverage>
-      </cc:Work>
-      <cc:License rdf:about="http://creativecommons.org/licenses/publicdomain/">
-        <cc:permits rdf:resource="http://creativecommons.org/ns#Reproduction"/>
-        <cc:permits rdf:resource="http://creativecommons.org/ns#Distribution"/>
-        <cc:permits rdf:resource="http://creativecommons.org/ns#DerivativeWorks"/>
-      </cc:License>
-    </rdf:RDF>
-  </metadata>
-  <g inkscape:label="Calque 1" inkscape:groupmode="layer" id="layer1" transform="translate(35.576672,-756.89764)">
+<svg xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:svg="http://www.w3.org/2000/svg" xmlns="http://www.w3.org/2000/svg" xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd" xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape" width="336" height="185" id="svg2" version="1.1" inkscape:version="0.48.1 " sodipodi:docname="lecture_angle_rapporteur.svg">
+  
+  
+  
+  
+  <g inkscape:label="Calque 1" inkscape:groupmode="layer" id="layer1" transform="translate(-32,-800)">
     
     
     <g transform="matrix(0.93715046,0,0,0.93715046,200,-19.022411)" id="layer1-9" inkscape:label="Calque 1">
@@ -639,12 +611,9 @@
       </g>
     </g>
     
-    <g id="g5183" style="stroke-width:0.5;stroke-miterlimit:4;stroke-dasharray:none" transform="translate(0.08928572,-0.53571429)">
-      <path inkscape:connector-curvature="0" id="path5179" d="m 170.26785,963.43361 0,8.66071" style="fill:none;stroke:#000000;stroke-width:0.5;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"/>
-      <path inkscape:connector-curvature="0" id="path5181" d="m 175.49106,967.76397 -10.44642,0" style="fill:none;stroke:#000000;stroke-width:0.5;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"/>
-    </g>
     
     
     
-    <flowRoot xml:space="preserve" id="flowRoot6211" style="font-size:16px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:Arial;-inkscape-font-specification:Arial"><flowRegion id="flowRegion6213"><rect id="rect6215" width="37.375645" height="341.43155" x="-31.819805" y="818.00677"/></flowRegion><flowPara id="flowPara6217"/></flowRoot>  </g>
+    
+      </g>
 </svg>
