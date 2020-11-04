@@ -283,7 +283,7 @@ export default {
             var target = event.target;
             var x = parseFloat(target.getAttribute("data-x")) || 0;
             var y = parseFloat(target.getAttribute("data-y")) || 0;
-
+            var angle = parseFloat(target.getAttribute("data-angle")) || 0;
             // update the element's style
             target.style.width = event.rect.width + "px";
             target.style.height = event.rect.height + "px";
@@ -293,10 +293,18 @@ export default {
             y += event.deltaRect.top;
 
             target.style.webkitTransform = target.style.transform =
-              "translate(" + x + "px," + y + "px)";
+              "translate(" +
+              x +
+              "px," +
+              y +
+              "px) rotate(" +
+              angle +
+              "rad" +
+              ")";
 
             target.setAttribute("data-x", x);
             target.setAttribute("data-y", y);
+            target.setAttribute("data-angle", angle);
             // target.textContent =
             //   Math.round(event.rect.width) +
             //   "\u00D7" +
@@ -313,6 +321,7 @@ export default {
           }),
 
           // minimum size
+
           interact.modifiers.restrictSize({
             min: { width: 100, height: 50 },
           }),
