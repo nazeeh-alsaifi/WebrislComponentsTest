@@ -10,7 +10,8 @@ class RulerWrapper extends BaseComponent {
 
   createEl() {
     const el = videojs.dom.createEl("div", {
-      className: "vjs-ruler-wrapper resize-drag",
+      className:
+        "vjs-ruler-wrapper draggable vjs-layout-tiny vjs-layout-x-small vjs-layout-small	vjs-layout-medium vjs-layout-large vjs-layout-x-large vjs-layout-huge",
     });
     this.buttonHandle_ = videojs.dom.createEl("div", {
       innerHTML: "&circlearrowright;",
@@ -36,7 +37,8 @@ class ProtactorWrapper extends BaseComponent {
 
   createEl() {
     const el = videojs.dom.createEl("div", {
-      className: "vjs-ruler-wrapper resize-drag",
+      className:
+        "vjs-ruler-wrapper draggable  vjs-layout-tiny vjs-layout-x-small vjs-layout-small	vjs-layout-medium vjs-layout-large vjs-layout-x-large vjs-layout-huge",
     });
     this.buttonHandle_ = videojs.dom.createEl("div", {
       innerHTML: "&circlearrowright;",

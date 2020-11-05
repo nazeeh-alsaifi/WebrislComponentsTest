@@ -16,7 +16,8 @@ class TimerMoveable extends BaseComponent {
 
   createEl() {
     return videojs.dom.createEl("div", {
-      className: "vjs-timer-moveable draggable",
+      className:
+        "vjs-timer-moveable draggable vjs-layout-tiny vjs-layout-x-small vjs-layout-small	vjs-layout-medium vjs-layout-large vjs-layout-x-large vjs-layout-huge",
     });
   }
 
