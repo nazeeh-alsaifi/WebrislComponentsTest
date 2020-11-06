@@ -50,6 +50,7 @@ import {
   RulerWrapper,
   ProtactorWrapper,
 } from "@/player_components/rulerComponents.js";
+import { BottomSheet } from "@/player_components/changeSrcComponents.js";
 import { mapActions, mapGetters } from "vuex";
 import "@interactjs/auto-start";
 import "@interactjs/actions/drag";
@@ -67,6 +68,18 @@ export default {
         return {
           autoplay: false,
           controls: true,
+          BottomSheet: true,
+          controlBar: {
+            children: {
+              SkipBackwardButton: { fps: 25 },
+              playToggle: true,
+              SkipForwardButton: { fps: 25 },
+              CurrentTimeDisplay: true,
+              ProgressControl: { liveui: true },
+              RemainingTimeDisplay: true,
+              FullscreenToggle: true,
+            },
+          },
           ToolsWrapper: {
             children: {
               ToolsParentButton: true,
@@ -97,17 +110,6 @@ export default {
           },
           RulerWrapper: { src: require("@/assets/exportedRuler2.svg") },
           ProtactorWrapper: { src: require("@/assets/protactor.svg") },
-          controlBar: {
-            children: {
-              SkipBackwardButton: { fps: 25 },
-              playToggle: true,
-              SkipForwardButton: { fps: 25 },
-              CurrentTimeDisplay: true,
-              ProgressControl: { liveui: true },
-              RemainingTimeDisplay: true,
-              FullscreenToggle: true,
-            },
-          },
         };
       },
     },
@@ -361,6 +363,8 @@ export default {
     // Rulers Components
     videojs.registerComponent("RulerWrapper", RulerWrapper);
     videojs.registerComponent("ProtactorWrapper", ProtactorWrapper);
+    // Bottom sheet
+    videojs.registerComponent("BottomSheet", BottomSheet);
 
     //---- control bar compoennts
     videojs.registerComponent("SkipForwardButton", SkipForwardButton);
@@ -384,6 +388,9 @@ export default {
 </script>
 
 <style >
+.interactive-player {
+  margin-bottom: 9em;
+}
 .video-js .vjs-skip-forward-item .vjs-icon-placeholder:before {
   content: "\f11f";
   font-family: "VideoJs";
@@ -576,6 +583,32 @@ export default {
   color: #fff;
   cursor: move;
 }
+/* .video-js .vjs-bottom-sheet {
+  position: relative;
+  bottom: 3em;
+  left: 0;
+  right: 0;
+  top: 0;
+  pointer-events: none;
+  height: 64px;
+} */
+.video-js.vjs-paused.vjs-has-started .vjs-bottom-sheet,
+.video-js.vjs-user-active.vjs-has-started .vjs-bottom-sheet {
+  display: block;
+}
+
+.video-js .vjs-bottom-sheet {
+  display: none;
+
+  width: 100%;
+  position: absolute;
+  bottom: 3em;
+  left: 0;
+  right: 0;
+  height: 64px;
+  background-color: rgb(43, 49, 52);
+}
+
 /* ================ NEW CONVENTION STYLING ==============*/
 
 .interactive-player p {
@@ -634,6 +667,27 @@ export default {
 }
 .interactive-player .p-w-12 {
   width: 48px;
+}
+
+.interactive-player .p-bg-gray-400 {
+  background-color: rgb(43, 49, 52) !important;
+}
+.interactive-player .p-z-30 {
+  z-index: 30;
+}
+.interactive-player .p-relative {
+  position: relative;
+}
+.interactive-player .p-fixed {
+  position: fixed;
+}
+.interactive-player .p-h-16 {
+  height: 64px;
+}
+.interactive-player .p-bg-gray-400 {
+  --bg-opacity: 1;
+  background-color: #cbd5e0;
+  background-color: rgba(203, 213, 224, var(--bg-opacity));
 }
 
 /* "\f116" */
