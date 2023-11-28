@@ -1,14 +1,15 @@
 <template>
   <div id="app">
+    <Movable1 />
     <img alt="Vue logo" src="./assets/logo.png" />
     <HelloWorld msg="Welcome to Your Vue.js App" />
+    <Video1V />
     <TableControl />
     <Datatable1v />
     <!-- 
     <ChartControls />
     <Chart1V /> 
     -->
-
     <Chart2V />
   </div>
 </template>
@@ -20,6 +21,8 @@ import TableControl from "./components/TableControl";
 // import Chart1V from "./components/Chart1V";
 // import ChartControls from "./components/ChartControls";
 import Chart2V from "./components/Chart2V";
+import Movable1 from "./components/Movable1";
+import Video1V from "./components/Video1V";
 export default {
   name: "App",
   components: {
@@ -29,6 +32,8 @@ export default {
     // Chart1V,
     // ChartControls,
     Chart2V,
+    Movable1,
+    Video1V,
   },
 };
 </script>
